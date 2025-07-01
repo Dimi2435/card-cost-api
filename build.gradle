@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.7' // Use a recent stable Spring Boot version
+    id 'io.spring.dependency-management' version '1.1.5' // Manages transitive dependencies
+}
+
+group = 'com.etraveligroup'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '21' // Aligns with Java 17 requirement
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral() // Where Gradle looks for dependencies
+}
+
+dependencies {
+    // Spring Boot Web Starter for REST endpoints
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Spring Boot Data JPA Starter for database interaction
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // MySQL Driver (or your chosen database driver)
+    runtimeOnly 'com.mysql:mysql-connector-j' // Use mysql-connector-j for newer versions
+    // You might also need specific version like: 'mysql:mysql-connector-java:8.0.33'
+
+    // H2 Database (for in-memory testing or simple local setup)
+    runtimeOnly 'com.h2database:h2'
+
+    // HTTP Client for external API calls (e.g., binlist.net)
+    implementation 'org.springframework.boot:spring-boot-starter-webflux' // For WebClient (reactive HTTP client)
+
+    // Validation API
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Lombok (optional, for less boilerplate code like getters/setters)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Spring Boot Test Starter
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Mockito for mocking in tests
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.mockito:mockito-junit-jupiter' // For Mockito with JUnit 5
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
