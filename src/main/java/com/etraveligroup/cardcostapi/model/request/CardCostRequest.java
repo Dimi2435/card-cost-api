@@ -5,6 +5,11 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data; // Requires Lombok dependency
 
+// Author: Dimitrios Milios
+// DTO for card cost request payload.
+// This class contains validation annotations to ensure the card number is valid.
+// Lombok annotations are used to generate boilerplate code.
+
 @Data // Generates getters, setters, toString, equals, hashCode
 public class CardCostRequest {
 

@@ -4,6 +4,9 @@ import com.etraveligroup.cardcostapi.model.response.CardCostResponse;
 
 import java.math.BigDecimal;
 
+// Author: Dimitrios Milios
+// Service interface for calculating card clearing costs.
+// This interface defines the contract for card cost calculations.
 public interface CardCostService {
 
     /**

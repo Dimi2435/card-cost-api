@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+// Author: Dimitrios Milios
+// Repository interface for accessing clearing cost data.
+// This interface extends JpaRepository to provide CRUD operations.
 @Repository
 public interface ClearingCostRepository extends JpaRepository<ClearingCostEntity, String> {
 

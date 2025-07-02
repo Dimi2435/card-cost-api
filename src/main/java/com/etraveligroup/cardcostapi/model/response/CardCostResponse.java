@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor; // Requires Lombok
 
 import java.math.BigDecimal;
 
+// Author: Dimitrios Milios
+// DTO for card cost response payload.
+// This class contains the response structure for card cost calculations.
+// Lombok annotations are used to generate boilerplate code.
 @Data // Generates getters, setters, toString, equals, hashCode
 @NoArgsConstructor // Generates a no-argument constructor
 @AllArgsConstructor // Generates a constructor with all fields

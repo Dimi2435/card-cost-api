@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// Author: Dimitrios Milios
+// REST controller for handling card cost requests.
+// This class exposes endpoints for calculating card clearing costs.
+
 @RestController
 //[cite_start]
 @RequestMapping("/payment-cards-cost") //[cite: 3, 42]

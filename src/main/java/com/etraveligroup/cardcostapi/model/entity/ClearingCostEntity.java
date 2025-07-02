@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor; // Requires Lombok
 
 import java.math.BigDecimal;
 
+// Author: Dimitrios Milios
+// JPA entity representing the clearing cost for different countries.
+// This class maps to the 'clearing_cost' table in the database.
+// It contains fields for country code and associated cost.
+// Lombok annotations are used to generate boilerplate code.
+
 @Entity
 @Table(name = "clearing_cost")
 @Data // Generates getters, setters, toString, equals, hashCode

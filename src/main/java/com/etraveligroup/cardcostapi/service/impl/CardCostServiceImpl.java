@@ -16,6 +16,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+// Author: Dimitrios Milios
+// Implementation of CardCostService interface.
+// This class contains the logic for calculating card clearing costs.
 @Service
 public class CardCostServiceImpl implements CardCostService {
 
