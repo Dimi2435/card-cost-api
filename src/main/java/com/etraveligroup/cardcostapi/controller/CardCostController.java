@@ -13,35 +13,38 @@ import org.springframework.web.bind.annotation.*;
 // This class exposes endpoints for calculating card clearing costs.
 
 @RestController
-//[cite_start]
-@RequestMapping("/payment-cards-cost") //[cite: 3, 42]
+// [cite_start]
+@RequestMapping("/payment-cards-cost") // [cite: 3, 42]
 public class CardCostController {
 
-    private final CardCostService cardCostService;
+  private final CardCostService cardCostService;
 
-    public CardCostController(CardCostService cardCostService) {
-        this.cardCostService = cardCostService;
-    }
+  public CardCostController(CardCostService cardCostService) {
+    this.cardCostService = cardCostService;
+  }
 
-    @PostMapping
-    public ResponseEntity<CardCostResponse> calculateCost(@Valid @RequestBody CardCostRequest request) {
-        // Basic input validation already handled by @Valid and DTO annotations
-        // Additional business logic validation can go in the service layer
+  @PostMapping
+  public ResponseEntity<CardCostResponse> calculateCost(
+      @Valid @RequestBody CardCostRequest request) {
+    // Basic input validation already handled by @Valid and DTO annotations
+    // Additional business logic validation can go in the service layer
 
-        CardCostResponse response = cardCostService.calculateCardClearingCost(request.getCardNumber());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+    CardCostResponse response = cardCostService.calculateCardClearingCost(request.getCardNumber());
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-    // --- Example CRUD endpoints for clearing cost matrix (requires service/repo methods) ---
-    // @GetMapping("/clearing-costs")
-    // public ResponseEntity<List<ClearingCostEntity>> getAllClearingCosts() { /* ... */ }
+  // --- Example CRUD endpoints for clearing cost matrix (requires service/repo methods) ---
+  // @GetMapping("/clearing-costs")
+  // public ResponseEntity<List<ClearingCostEntity>> getAllClearingCosts() { /* ... */ }
 
-    // @PostMapping("/clearing-costs")
-    // public ResponseEntity<ClearingCostEntity> addClearingCost(@RequestBody ClearingCostEntity cost) { /* ... */ }
+  // @PostMapping("/clearing-costs")
+  // public ResponseEntity<ClearingCostEntity> addClearingCost(@RequestBody ClearingCostEntity cost)
+  // { /* ... */ }
 
-    // @PutMapping("/clearing-costs/{countryCode}")
-    // public ResponseEntity<ClearingCostEntity> updateClearingCost(@PathVariable String countryCode, @RequestBody BigDecimal newCost) { /* ... */ }
+  // @PutMapping("/clearing-costs/{countryCode}")
+  // public ResponseEntity<ClearingCostEntity> updateClearingCost(@PathVariable String countryCode,
+  // @RequestBody BigDecimal newCost) { /* ... */ }
 
-    // @DeleteMapping("/clearing-costs/{countryCode}")
-    // public ResponseEntity<Void> deleteClearingCost(@PathVariable String countryCode) { /* ... */ }
+  // @DeleteMapping("/clearing-costs/{countryCode}")
+  // public ResponseEntity<Void> deleteClearingCost(@PathVariable String countryCode) { /* ... */ }
 }

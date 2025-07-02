@@ -2,11 +2,12 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.7' // Use a recent stable Spring Boot version
     id 'io.spring.dependency-management' version '1.1.5' // Manages transitive dependencies
+    id 'com.diffplug.spotless' version '7.0.4' // Spotless plugin for formatting
 }
 
 group = 'com.etraveligroup'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '21' // Aligns with Java 17 requirement
+sourceCompatibility = '21' // Aligns with Java 21 requirement
 
 configurations {
     compileOnly {
@@ -16,6 +17,7 @@ configurations {
 
 repositories {
     mavenCentral() // Where Gradle looks for dependencies
+    gradlePluginPortal()
 }
 
 dependencies {
@@ -26,7 +28,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // MySQL Driver (or your chosen database driver)
-    runtimeOnly 'com.mysql:mysql-connector-j' // Use mysql-connector-j for newer versions
+    runtimeOnly 'com.mysql:mysql-connector-j'
     // You might also need specific version like: 'mysql:mysql-connector-java:8.0.33'
 
     // H2 Database (for in-memory testing or simple local setup)
@@ -50,6 +52,32 @@ dependencies {
     testImplementation 'org.mockito:mockito-junit-jupiter' // For Mockito with JUnit 5
 }
 
+// Spotless configuration
+spotless {
+    java {
+        // Use the Google Java Format formatter
+        googleJavaFormat('1.27.0') // The latest stable version compatible with Java 21
+        target 'src/main/java/**/*.java', 'src/test/java/**/*.java'
+        removeUnusedImports() // Optional: removes unused imports
+        trimTrailingWhitespace() // Optional: removes trailing whitespace
+        endWithNewline() // Optional: ensures files end with a newline
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// Optional: Integrate spotlessApply into the build lifecycle
+// This makes sure spotlessApply runs whenever you run 'gradle check' or 'gradle build'
+// Be aware that this will modify your source files during the build process.
+// If you prefer to only check for formatting violations without applying them automatically
+// during the build, you can remove this block and just run 'gradle spotlessApply' manually.
+tasks.check {
+    dependsOn spotlessApply
+}
+
+// Alternatively, to only check for formatting violations without applying them:
+// tasks.check {
+//     dependsOn spotlessCheck
+// }

@@ -1,10 +1,9 @@
 package com.etraveligroup.cardcostapi.model.response;
 
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor; // Requires Lombok
 import lombok.Data; // Requires Lombok
 import lombok.NoArgsConstructor; // Requires Lombok
-
-import java.math.BigDecimal;
 
 // Author: Dimitrios Milios
 // DTO for card cost response payload.
@@ -14,6 +13,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor // Generates a no-argument constructor
 @AllArgsConstructor // Generates a constructor with all fields
 public class CardCostResponse {
-    private String country; //[cite_start]// ISO2 code [cite: 3, 47]
-    private BigDecimal cost; //[cite_start]// Decimal cost [cite: 3, 49]
+  private String country; // [cite_start]// ISO2 code [cite: 3, 47]
+  private BigDecimal cost; // [cite_start]// Decimal cost [cite: 3, 49]
 }
