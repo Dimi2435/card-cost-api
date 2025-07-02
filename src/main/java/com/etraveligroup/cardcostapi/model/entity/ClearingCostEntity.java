@@ -4,24 +4,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import lombok.Data; // Requires Lombok
-import lombok.NoArgsConstructor; // Requires Lombok
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // Author: Dimitrios Milios
 // JPA entity representing the clearing cost for different countries.
 // This class maps to the 'clearing_cost' table in the database.
 // It contains fields for country code and associated cost.
-// Lombok annotations are used to generate boilerplate code.
 
+/**
+ * JPA entity representing the clearing cost for different countries.
+ * This class maps to the 'clearing_cost' table in the database.
+ * It contains fields for country code and associated cost.
+ */
 @Entity
 @Table(name = "clearing_cost")
-@Data // Generates getters, setters, toString, equals, hashCode
-@NoArgsConstructor // Generates a no-argument constructor
+@Data
+@NoArgsConstructor
 public class ClearingCostEntity {
 
-  @Id // The primary key, typically the country code
-  private String countryCode; // [cite_start]// e.g., "US", "GR", "Others" [cite: 2, 19]
-  private BigDecimal cost; // [cite_start]// e.g., $5, $15, $10 [cite: 2, 19]
+  @Id
+  private String countryCode; // e.g., "US", "GR", "Others"
+  private BigDecimal cost; // e.g., $5, $15, $10
 
   public ClearingCostEntity(String countryCode, BigDecimal cost) {
     this.countryCode = countryCode;

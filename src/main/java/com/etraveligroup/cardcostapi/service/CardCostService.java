@@ -5,6 +5,11 @@ import com.etraveligroup.cardcostapi.model.response.CardCostResponse;
 // Author: Dimitrios Milios
 // Service interface for calculating card clearing costs.
 // This interface defines the contract for card cost calculations.
+
+/**
+ * Service interface for calculating card clearing costs.
+ * This interface defines the contract for card cost calculations.
+ */
 public interface CardCostService {
 
   /**

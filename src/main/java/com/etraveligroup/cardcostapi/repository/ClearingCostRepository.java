@@ -8,10 +8,19 @@ import org.springframework.stereotype.Repository;
 // Author: Dimitrios Milios
 // Repository interface for accessing clearing cost data.
 // This interface extends JpaRepository to provide CRUD operations.
+
+/**
+ * Repository interface for accessing clearing cost data.
+ * This interface extends JpaRepository to provide CRUD operations.
+ */
 @Repository
 public interface ClearingCostRepository extends JpaRepository<ClearingCostEntity, String> {
 
-  // Spring Data JPA automatically provides basic CRUD operations (save, findById, findAll, delete)
-  // You can add custom queries here if needed, e.g.,
+  /**
+   * Finds a clearing cost entity by its country code.
+   *
+   * @param countryCode The country code to search for.
+   * @return An Optional containing the ClearingCostEntity if found, otherwise empty.
+   */
   Optional<ClearingCostEntity> findByCountryCode(String countryCode);
 }

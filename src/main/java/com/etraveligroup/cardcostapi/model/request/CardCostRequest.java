@@ -3,19 +3,21 @@ package com.etraveligroup.cardcostapi.model.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Data; // Requires Lombok dependency
+import lombok.Data;
 
 // Author: Dimitrios Milios
 // DTO for card cost request payload.
 // This class contains validation annotations to ensure the card number is valid.
-// Lombok annotations are used to generate boilerplate code.
 
-@Data // Generates getters, setters, toString, equals, hashCode
+/**
+ * DTO for card cost request payload.
+ * This class contains validation annotations to ensure the card number is valid.
+ */
+@Data
 public class CardCostRequest {
 
   @NotBlank(message = "Card number cannot be empty")
-  // [cite_start]
-  @Size(min = 8, max = 19, message = "Card number must be between 8 and 19 digits") // [cite: 13]
+  @Size(min = 8, max = 19, message = "Card number must be between 8 and 19 digits")
   @Pattern(regexp = "^[0-9]+$", message = "Card number must contain only digits")
   private String cardNumber;
 
