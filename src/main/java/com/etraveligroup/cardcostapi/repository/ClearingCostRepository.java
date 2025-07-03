@@ -5,22 +5,16 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+// For BigDecimal
+
 // Author: Dimitrios Milios
-// Repository interface for accessing clearing cost data.
-// This interface extends JpaRepository to provide CRUD operations.
+// Repository interface for clearing cost data.
 
-/**
- * Repository interface for accessing clearing cost data.
- * This interface extends JpaRepository to provide CRUD operations.
- */
+/** Repository interface for clearing cost data. */
 @Repository
-public interface ClearingCostRepository extends JpaRepository<ClearingCostEntity, String> {
-
-  /**
-   * Finds a clearing cost entity by its country code.
-   *
-   * @param countryCode The country code to search for.
-   * @return An Optional containing the ClearingCostEntity if found, otherwise empty.
-   */
+public interface ClearingCostRepository extends JpaRepository<ClearingCostEntity, Long> {
   Optional<ClearingCostEntity> findByCountryCode(String countryCode);
+  // List<ClearingCostEntity> findAll();
+  // ClearingCostEntity save(ClearingCostEntity cost);
+  // void delete(ClearingCostEntity cost);
 }

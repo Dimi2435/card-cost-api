@@ -10,8 +10,8 @@ import lombok.Data;
 // This class contains validation annotations to ensure the card number is valid.
 
 /**
- * DTO for card cost request payload.
- * This class contains validation annotations to ensure the card number is valid.
+ * DTO for card cost request payload. This class contains validation annotations to ensure the card
+ * number is valid.
  */
 @Data
 public class CardCostRequest {

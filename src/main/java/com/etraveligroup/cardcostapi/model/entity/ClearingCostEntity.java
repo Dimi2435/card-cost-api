@@ -1,38 +1,37 @@
 package com.etraveligroup.cardcostapi.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.math.BigDecimal;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*; // For JPA annotations like @Entity, @Table, etc.
+import java.math.BigDecimal; // For BigDecimal
+import lombok.Data; // For Lombok's @Data annotation
 
 // Author: Dimitrios Milios
-// JPA entity representing the clearing cost for different countries.
-// This class maps to the 'clearing_cost' table in the database.
-// It contains fields for country code and associated cost.
+// Entity representing the clearing cost data.
 
-/**
- * JPA entity representing the clearing cost for different countries.
- * This class maps to the 'clearing_cost' table in the database.
- * It contains fields for country code and associated cost.
- */
-@Entity
-@Table(name = "clearing_cost")
+/** Entity representing the clearing cost data. */
 @Data
-@NoArgsConstructor
+@Entity
+@Table(name = "clearing_costs")
 public class ClearingCostEntity {
 
   @Id
-  private String countryCode; // e.g., "US", "GR", "Others"
-  private BigDecimal cost; // e.g., $5, $15, $10
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  public ClearingCostEntity(String countryCode, BigDecimal cost) {
-    this.countryCode = countryCode;
-    this.cost = cost;
+  @Column(name = "country_code", nullable = false, unique = true)
+  private String countryCode;
+
+  @Column(name = "cost", nullable = false)
+  private BigDecimal cost;
+
+  public Long getId() {
+    return id;
+  }
+
+  public String getCountryCode() {
+    return countryCode;
   }
 
   public BigDecimal getCost() {
-    return this.cost;
+    return cost;
   }
 }

@@ -1,14 +1,17 @@
 package com.etraveligroup.cardcostapi.service;
 
+import com.etraveligroup.cardcostapi.model.entity.ClearingCostEntity;
 import com.etraveligroup.cardcostapi.model.response.CardCostResponse;
+import java.math.BigDecimal; // For BigDecimal
+import java.util.List;
 
 // Author: Dimitrios Milios
 // Service interface for calculating card clearing costs.
 // This interface defines the contract for card cost calculations.
 
 /**
- * Service interface for calculating card clearing costs.
- * This interface defines the contract for card cost calculations.
+ * Service interface for calculating card clearing costs. This interface defines the contract for
+ * card cost calculations.
  */
 public interface CardCostService {
 
@@ -22,8 +25,9 @@ public interface CardCostService {
   CardCostResponse calculateCardClearingCost(String cardNumber);
 
   // Methods for CRUD on clearing cost matrix could also be added here, e.g.:
-  // ClearingCostEntity addClearingCost(ClearingCostEntity cost);
-  // ClearingCostEntity updateClearingCost(String countryCode, BigDecimal newCost);
-  // void deleteClearingCost(String countryCode);
-  // List<ClearingCostEntity> getAllClearingCosts();
+  ClearingCostEntity updateClearingCost(String countryCode, BigDecimal newCost);
+
+  void deleteClearingCost(String countryCode);
+
+  List<ClearingCostEntity> getAllClearingCosts();
 }

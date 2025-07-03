@@ -6,6 +6,7 @@ import com.etraveligroup.cardcostapi.repository.ClearingCostRepository;
 import com.etraveligroup.cardcostapi.service.CardCostService;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,8 @@ import reactor.core.publisher.Mono;
 // This class contains the logic for calculating card clearing costs.
 
 /**
- * Implementation of CardCostService interface.
- * This class contains the logic for calculating card clearing costs.
+ * Implementation of CardCostService interface. This class contains the logic for calculating card
+ * clearing costs.
  */
 @Service
 public class CardCostServiceImpl implements CardCostService {
@@ -30,6 +31,7 @@ public class CardCostServiceImpl implements CardCostService {
   private final ClearingCostRepository clearingCostRepository;
   private final WebClient binlistWebClient;
   private static final Logger logger = LoggerFactory.getLogger(CardCostServiceImpl.class);
+  private static final String BINLIST_BASE_URL = "https://lookup.binlist.net/";
 
   @Value("${app.clearing-cost.default-country:OTHERS}")
   private String defaultCountryCode;
@@ -40,7 +42,7 @@ public class CardCostServiceImpl implements CardCostService {
   public CardCostServiceImpl(
       ClearingCostRepository clearingCostRepository, WebClient.Builder webClientBuilder) {
     this.clearingCostRepository = clearingCostRepository;
-    this.binlistWebClient = webClientBuilder.baseUrl("https://binlist.net/").build();
+    this.binlistWebClient = webClientBuilder.baseUrl(BINLIST_BASE_URL).build();
   }
 
   /**
@@ -61,7 +63,7 @@ public class CardCostServiceImpl implements CardCostService {
     String countryCode =
         binlistWebClient
             .get()
-            .uri("/" + bin)
+            .uri(BINLIST_BASE_URL + bin)
             .retrieve()
             .bodyToMono(BinlistResponse.class)
             .timeout(Duration.ofSeconds(5))
@@ -82,27 +84,58 @@ public class CardCostServiceImpl implements CardCostService {
       finalCountryCode = countryCode.toUpperCase();
       cost =
           clearingCostRepository
-              .findByCountryCode(finalCountryCode)
-              .map(ClearingCostEntity::getCost)
+              .findByCountryCode(finalCountryCode) // This returns Optional<ClearingCostEntity>
+              .map(ClearingCostEntity::getCost) // Correct: maps Optional<ClearingCostEntity> to
+              // Optional<BigDecimal>
               .orElseGet(
                   () -> {
-                    logger.warn("Country {} not found in clearing cost matrix, falling back to 'Others'.", finalCountryCode);
+                    logger.warn(
+                        "Country {} not found in clearing cost matrix, falling back to 'Others'.",
+                        finalCountryCode);
                     return clearingCostRepository
-                        .findByCountryCode(defaultCountryCode)
-                        .map(ClearingCostEntity::getCost)
-                        .orElse(defaultCost);
+                        .findByCountryCode(
+                            defaultCountryCode) // Returns Optional<ClearingCostEntity>
+                        .map(ClearingCostEntity::getCost) // Correct
+                        .orElse(
+                            defaultCost); // Gets BigDecimal from Optional<BigDecimal> or default
                   });
     } else {
       finalCountryCode = defaultCountryCode;
       cost =
           clearingCostRepository
-              .findByCountryCode(defaultCountryCode)
-              .map(ClearingCostEntity::getCost)
-              .orElse(defaultCost);
+              .findByCountryCode(defaultCountryCode) // Returns Optional<ClearingCostEntity>
+              .map(ClearingCostEntity::getCost) // Correct
+              .orElse(defaultCost); // Gets BigDecimal from Optional<BigDecimal> or default
     }
 
     logger.info("Calculated cost: {} for country: {}", cost, finalCountryCode);
     return new CardCostResponse(finalCountryCode, cost);
+  }
+
+  @Override
+  public ClearingCostEntity updateClearingCost(String countryCode, BigDecimal newCost) {
+    // This line is correct if findByCountryCode returns Optional<ClearingCostEntity>
+    ClearingCostEntity costEntity =
+        clearingCostRepository
+            .findByCountryCode(countryCode)
+            .orElseThrow(() -> new IllegalArgumentException("Country not found: " + countryCode));
+    costEntity.setCost(newCost);
+    return costEntity; // You might want to save it here: clearingCostRepository.save(costEntity);
+  }
+
+  @Override
+  public void deleteClearingCost(String countryCode) {
+    // This line is correct if findByCountryCode returns Optional<ClearingCostEntity>
+    ClearingCostEntity costEntity =
+        clearingCostRepository
+            .findByCountryCode(countryCode)
+            .orElseThrow(() -> new IllegalArgumentException("Country not found: " + countryCode));
+    clearingCostRepository.delete(costEntity);
+  }
+
+  @Override
+  public List<ClearingCostEntity> getAllClearingCosts() {
+    return clearingCostRepository.findAll();
   }
 
   @Data
