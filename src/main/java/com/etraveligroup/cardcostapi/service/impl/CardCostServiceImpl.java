@@ -33,10 +33,10 @@ public class CardCostServiceImpl implements CardCostService {
   private static final Logger logger = LoggerFactory.getLogger(CardCostServiceImpl.class);
   private static final String BINLIST_BASE_URL = "https://lookup.binlist.net/";
 
-  @Value("${app.clearing-cost.default-country:OTHERS}")
+  @Value("${app.clearing-cost.default-country}")
   private String defaultCountryCode;
 
-  @Value("${app.clearing-cost.default-cost:10.00}")
+  @Value("${app.clearing-cost.default-cost}")
   private BigDecimal defaultCost;
 
   public CardCostServiceImpl(
