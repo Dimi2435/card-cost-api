@@ -1,6 +1,8 @@
 package com.etraveligroup.cardcostapi.service.impl;
 
 import com.etraveligroup.cardcostapi.dto.ClearingCostResponse;
+import com.etraveligroup.cardcostapi.exception.CostNotFoundException;
+import com.etraveligroup.cardcostapi.exception.InvalidCardNumberException;
 import com.etraveligroup.cardcostapi.model.ClearingCost;
 import com.etraveligroup.cardcostapi.repository.ClearingCostRepository;
 import com.etraveligroup.cardcostapi.service.ClearingCostService;
@@ -50,13 +52,14 @@ public class ClearingCostServiceImpl implements ClearingCostService {
    *
    * @param cardNumber The full card number (PAN).
    * @return ClearingCostResponse containing the country and calculated cost.
-   * @throws IllegalArgumentException if the card number is invalid or BIN lookup fails.
+   * @throws InvalidRequestException if the card number is invalid or BIN lookup fails.
    */
   @Override
   public ClearingCostResponse calculateCardClearingCost(String cardNumber) {
     logger.info("Calculating clearing cost for card number: {}", cardNumber);
     if (cardNumber == null || cardNumber.length() < 6) {
-      throw new IllegalArgumentException("Card number must have at least 6 digits to extract BIN.");
+      throw new InvalidCardNumberException(
+          "Card number must have at least 6 digits to extract BIN.");
     }
     String bin = cardNumber.substring(0, 6);
 
@@ -108,17 +111,20 @@ public class ClearingCostServiceImpl implements ClearingCostService {
               .orElse(defaultCost); // Gets BigDecimal from Optional<BigDecimal> or default
     }
 
+    if (countryCode == null || countryCode.isEmpty()) {
+      throw new CostNotFoundException("Cost not found for the specified country.");
+    }
+
     logger.info("Calculated cost: {} for country: {}", cost, finalCountryCode);
     return new ClearingCostResponse(finalCountryCode, cost);
   }
 
   @Override
   public ClearingCost updateClearingCost(String countryCode, BigDecimal newCost) {
-    // This line is correct if findByCountryCode returns Optional<ClearingCostEntity>
     ClearingCost costEntity =
         clearingCostRepository
             .findByCountryCode(countryCode)
-            .orElseThrow(() -> new IllegalArgumentException("Country not found: " + countryCode));
+            .orElseThrow(() -> new CostNotFoundException("Country not found: " + countryCode));
     costEntity.setCost(newCost);
     return costEntity; // You might want to save it here: clearingCostRepository.save(costEntity);
   }
