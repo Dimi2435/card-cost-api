@@ -6,35 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppConstants {
 
-  public static String API_BASE_PATH;
+  public static final String API_BASE_PATH = "/api";
 
-  public static String PAYMENT_CARDS_COST_ENDPOINT;
+  public static final String PAYMENT_CARDS_COST_ENDPOINT = "/payment-cards-cost";
 
-  public static String USERS_ENDPOINT;
+  public static final String USERS_ENDPOINT = "/users";
 
-  public static String DEFAULT_API_VERSION;
-
-  public static final String VERSIONED_API_PATH = "/v" + DEFAULT_API_VERSION;
-
-  @Value("${api.base.path}")
-  public void setApiBasePath(String apiBasePath) {
-    API_BASE_PATH = apiBasePath;
-  }
-
-  @Value("${api.payment-cards-cost.endpoint}")
-  public void setPaymentCardsCostEndpoint(String paymentCardsCostEndpoint) {
-    PAYMENT_CARDS_COST_ENDPOINT = paymentCardsCostEndpoint;
-  }
-
-  @Value("${app.admin.username}")
-  public void setUsersEndpoint(String usersEndpoint) {
-    USERS_ENDPOINT = usersEndpoint;
-  }
-
-  @Value("${api.default.version}")
-  public void setDefaultApiVersion(String defaultApiVersion) {
-    DEFAULT_API_VERSION = defaultApiVersion;
-  }
+  public static final String DEFAULT_API_VERSION = "1";
 
   // You could also inject the supported versions as a List<String>
   // @Value("#{'${api.supported-versions}'.split(',')}")
@@ -51,23 +29,45 @@ public class AppConstants {
   // public static final String DEFAULT_COUNTRY_CODE = "US"; // Example if applicable
   // TODO: Check if this is needed for unit tests
 
-  public static String getApiBasePath() {
-    return API_BASE_PATH;
+  private static String DEFAULT_USERNAME;
+  private static String DEFAULT_PASSWORD;
+  private static String ADMIN_USERNAME;
+  private static String ADMIN_PASSWORD;
+
+  @Value("${app.default.username}")
+  public void setDefaultUsername(String defaultUsername) {
+    DEFAULT_USERNAME = defaultUsername;
   }
 
-  public static String getPaymentCardsCostEndpoint() {
-    return PAYMENT_CARDS_COST_ENDPOINT;
+  @Value("${app.default.password}")
+  public void setDefaultPassword(String defaultPassword) {
+    DEFAULT_PASSWORD = defaultPassword;
   }
 
-  public static String getUsersEndpoint() {
-    return USERS_ENDPOINT;
+  @Value("${app.admin.username}")
+  public void setAdminUsername(String adminUsername) {
+    ADMIN_USERNAME = adminUsername;
   }
 
-  public static String getDefaultApiVersion() {
-    return DEFAULT_API_VERSION;
+  @Value("${app.admin.password}")
+  public void setAdminPassword(String adminPassword) {
+    ADMIN_PASSWORD = adminPassword;
   }
 
-  public static String getVersionedApiPath() {
-    return VERSIONED_API_PATH;
+  // Getters for the properties
+  public static String getDefaultUsername() {
+    return DEFAULT_USERNAME;
+  }
+
+  public static String getDefaultPassword() {
+    return DEFAULT_PASSWORD;
+  }
+
+  public static String getAdminUsername() {
+    return ADMIN_USERNAME;
+  }
+
+  public static String getAdminPassword() {
+    return ADMIN_PASSWORD;
   }
 }

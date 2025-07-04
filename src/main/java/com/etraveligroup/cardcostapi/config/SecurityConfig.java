@@ -112,7 +112,8 @@ public class SecurityConfig {
                     // Construct the path dynamically from AppConstants
                     .requestMatchers(
                         AppConstants.API_BASE_PATH
-                            + AppConstants.VERSIONED_API_PATH
+                            + "/v"
+                            + AppConstants.DEFAULT_API_VERSION
                             + AppConstants.PAYMENT_CARDS_COST_ENDPOINT
                             + "**")
                     .authenticated() // Protect specific endpoints
