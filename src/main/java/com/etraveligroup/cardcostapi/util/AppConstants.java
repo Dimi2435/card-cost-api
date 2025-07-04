@@ -6,13 +6,35 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppConstants {
 
-  public static final String API_BASE_PATH = "/api";
+  public static String API_BASE_PATH;
 
-  public static final String PAYMENT_CARDS_COST_ENDPOINT = "/payment-cards-cost";
+  public static String PAYMENT_CARDS_COST_ENDPOINT;
 
-  public static final String USERS_ENDPOINT = "/users";
+  public static String USERS_ENDPOINT;
 
-  public static final String DEFAULT_API_VERSION = "1";
+  public static String DEFAULT_API_VERSION;
+
+  public static final String VERSIONED_API_PATH = "/v" + DEFAULT_API_VERSION;
+
+  @Value("${api.base.path}")
+  public void setApiBasePath(String apiBasePath) {
+    API_BASE_PATH = apiBasePath;
+  }
+
+  @Value("${api.payment-cards-cost.endpoint}")
+  public void setPaymentCardsCostEndpoint(String paymentCardsCostEndpoint) {
+    PAYMENT_CARDS_COST_ENDPOINT = paymentCardsCostEndpoint;
+  }
+
+  @Value("${app.admin.username}")
+  public void setUsersEndpoint(String usersEndpoint) {
+    USERS_ENDPOINT = usersEndpoint;
+  }
+
+  @Value("${api.default.version}")
+  public void setDefaultApiVersion(String defaultApiVersion) {
+    DEFAULT_API_VERSION = defaultApiVersion;
+  }
 
   // You could also inject the supported versions as a List<String>
   // @Value("#{'${api.supported-versions}'.split(',')}")
@@ -29,37 +51,23 @@ public class AppConstants {
   // public static final String DEFAULT_COUNTRY_CODE = "US"; // Example if applicable
   // TODO: Check if this is needed for unit tests
 
-  @Value("${app.default.username}")
-  private static String DEFAULT_USERNAME;
-
-  @Value("${app.default.password}")
-  private static String DEFAULT_PASSWORD;
-
-  @Value("${app.admin.username}")
-  private static String ADMIN_USERNAME;
-
-  @Value("${app.admin.password}")
-  private static String ADMIN_PASSWORD;
-
-  // Getters for the properties
-  public static String getDefaultUsername() {
-    return DEFAULT_USERNAME;
+  public static String getApiBasePath() {
+    return API_BASE_PATH;
   }
 
-  public static String getDefaultPassword() {
-    return DEFAULT_PASSWORD;
+  public static String getPaymentCardsCostEndpoint() {
+    return PAYMENT_CARDS_COST_ENDPOINT;
   }
 
-  public static String getAdminUsername() {
-    return ADMIN_USERNAME;
+  public static String getUsersEndpoint() {
+    return USERS_ENDPOINT;
   }
 
-  public static String getAdminPassword() {
-    return ADMIN_PASSWORD;
+  public static String getDefaultApiVersion() {
+    return DEFAULT_API_VERSION;
   }
 
-  // Private constructor to prevent instantiation
-  private AppConstants() {
-    throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+  public static String getVersionedApiPath() {
+    return VERSIONED_API_PATH;
   }
 }

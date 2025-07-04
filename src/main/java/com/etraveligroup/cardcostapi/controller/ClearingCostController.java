@@ -25,8 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(
     AppConstants.API_BASE_PATH
-        + "/v"
-        + AppConstants.DEFAULT_API_VERSION
+        + AppConstants.VERSIONED_API_PATH
         + AppConstants.PAYMENT_CARDS_COST_ENDPOINT)
 public class ClearingCostController {
 
@@ -56,7 +55,7 @@ public class ClearingCostController {
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   public ResponseEntity<ClearingCostResponse> calculateCost(
       @RequestBody CalculateClearingCostRequest request,
-      @RequestParam(value = "version", defaultValue = AppConstants.DEFAULT_API_VERSION)
+      @RequestParam(value = "version", defaultValue = "/v"+AppConstants.)
           String version) {
     logger.info("API Version: {}", version);
     ClearingCostResponse response =

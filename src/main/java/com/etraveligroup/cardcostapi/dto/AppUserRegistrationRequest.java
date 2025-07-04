@@ -1,6 +1,6 @@
 package com.etraveligroup.cardcostapi.dto;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class AppUserRegistrationRequest {
 

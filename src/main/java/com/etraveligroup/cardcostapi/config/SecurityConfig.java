@@ -7,6 +7,7 @@ import com.etraveligroup.cardcostapi.model.AppUser;
 import com.etraveligroup.cardcostapi.util.*;
 import com.etraveligroup.cardcostapi.util.AppConstants;
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +32,18 @@ public class SecurityConfig {
 
   private final JwtUtil jwtUtil;
 
+  @Value("${app.default.username}")
+  private String defaultUsername;
+
+  @Value("${app.default.password}")
+  private String defaultPassword;
+
+  @Value("${app.admin.username}")
+  private String adminUsername;
+
+  @Value("${app.admin.password}")
+  private String adminPassword;
+
   public SecurityConfig(JwtUtil jwtUtil) {
     this.jwtUtil = jwtUtil;
   }
@@ -43,30 +56,28 @@ public class SecurityConfig {
 
   @Bean
   public UserDetailsService userDetailsService() {
-    System.out.println("user: USER USERNAME " + AppConstants.getDefaultUsername());
-    System.out.println("admin: ADMIN USERNAME " + AppConstants.getAdminUsername());
+    System.out.println("user: USER USERNAME " + defaultUsername);
+    System.out.println("admin: ADMIN USERNAME " + adminUsername);
 
-    System.out.println("Raw password: USER PASSWORD " + AppConstants.getDefaultPassword());
-    System.out.println("Raw password: ADMIN PASSWORD " + AppConstants.getAdminPassword());
+    System.out.println("Raw password: USER PASSWORD " + defaultPassword);
+    System.out.println("Raw password: ADMIN PASSWORD " + adminPassword);
 
     System.out.println(
-        "encoded password: USER PASSWORD "
-            + passwordEncoder().encode(AppConstants.getDefaultPassword()));
+        "encoded password: USER PASSWORD " + passwordEncoder().encode(defaultPassword));
     System.out.println(
-        "encoded password: ADMIN PASSWORD "
-            + passwordEncoder().encode(AppConstants.getAdminPassword()));
+        "encoded password: ADMIN PASSWORD " + passwordEncoder().encode(adminPassword));
 
     UserDetails user =
         new AppUser.Builder()
-            .username(AppConstants.getDefaultUsername())
-            .password(passwordEncoder().encode(AppConstants.getDefaultPassword()))
+            .username(defaultUsername)
+            .password(passwordEncoder().encode(defaultPassword))
             .roles(Set.of(Role.ROLE_USER)) // Assuming Role is an enum
             .build();
 
     UserDetails admin =
         new AppUser.Builder()
-            .username(AppConstants.getAdminUsername())
-            .password(passwordEncoder().encode(AppConstants.getAdminPassword()))
+            .username(adminUsername)
+            .password(passwordEncoder().encode(adminPassword))
             .roles(Set.of(Role.ROLE_ADMIN)) // Assuming Role is an enum
             .build();
 
@@ -101,8 +112,7 @@ public class SecurityConfig {
                     // Construct the path dynamically from AppConstants
                     .requestMatchers(
                         AppConstants.API_BASE_PATH
-                            + "/v"
-                            + AppConstants.DEFAULT_API_VERSION
+                            + AppConstants.VERSIONED_API_PATH
                             + AppConstants.PAYMENT_CARDS_COST_ENDPOINT
                             + "**")
                     .authenticated() // Protect specific endpoints

@@ -57,13 +57,6 @@ dependencies {
 
     implementation 'io.jsonwebtoken:jjwt:0.9.1' // For JWT
     implementation 'org.springframework.boot:spring-boot-starter-security' // For Spring Security
-
-    implementation 'javax.persistence:javax.persistence-api:2.2' // or the latest version
-
-    implementation 'org.hibernate:hibernate-core:5.4.30.Final' // or the latest version
-
-    implementation 'javax.validation:validation-api:2.0.1.Final'
-    implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
 }
 
 // Spotless configuration
