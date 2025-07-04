@@ -1,3 +1,4 @@
+import com.etraveligroup.cardcostapi.util.AppConstants;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -13,7 +14,7 @@ public class SwaggerConfig {
         .info(
             new Info()
                 .title("Card Cost API")
-                .version("1.0")
+                .version(AppConstants.DEFAULT_API_VERSION)
                 .description("API for calculating costs associated with payment cards.")
                 .contact(new Contact().name("Dimitrios Milios")));
   }
