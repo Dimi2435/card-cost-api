@@ -6,6 +6,8 @@ import com.etraveligroup.cardcostapi.exception.InvalidCardNumberException;
 import com.etraveligroup.cardcostapi.model.ClearingCost;
 import com.etraveligroup.cardcostapi.repository.ClearingCostRepository;
 import com.etraveligroup.cardcostapi.service.ClearingCostService;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
@@ -55,9 +57,10 @@ public class ClearingCostServiceImpl implements ClearingCostService {
    * @throws InvalidRequestException if the card number is invalid or BIN lookup fails.
    */
   @Override
-  public ClearingCostResponse calculateCardClearingCost(String cardNumber) {
+  public ClearingCostResponse calculateCardClearingCost(
+      @NotBlank(message = "Card number cannot be blank") String cardNumber) {
     logger.info("Calculating clearing cost for card number: {}", cardNumber);
-    if (cardNumber == null || cardNumber.length() < 6) {
+    if (cardNumber.length() < 6) {
       throw new InvalidCardNumberException(
           "Card number must have at least 6 digits to extract BIN.");
     }
@@ -120,7 +123,9 @@ public class ClearingCostServiceImpl implements ClearingCostService {
   }
 
   @Override
-  public ClearingCost updateClearingCost(String countryCode, BigDecimal newCost) {
+  public ClearingCost updateClearingCost(
+      @NotBlank(message = "Country code cannot be blank") String countryCode,
+      @NotNull(message = "New cost cannot be null") BigDecimal newCost) {
     ClearingCost costEntity =
         clearingCostRepository
             .findByCountryCode(countryCode)
@@ -130,7 +135,8 @@ public class ClearingCostServiceImpl implements ClearingCostService {
   }
 
   @Override
-  public void deleteClearingCost(String countryCode) {
+  public void deleteClearingCost(
+      @NotBlank(message = "Country code cannot be blank") String countryCode) {
     // This line is correct if findByCountryCode returns Optional<ClearingCostEntity>
     ClearingCost costEntity =
         clearingCostRepository
