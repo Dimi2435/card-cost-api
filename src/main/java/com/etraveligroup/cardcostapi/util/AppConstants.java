@@ -10,6 +10,8 @@ public class AppConstants {
 
   public static final String PAYMENT_CARDS_COST_ENDPOINT = "/payment-cards-cost";
 
+  public static final String USERS_ENDPOINT = "/users";
+
   public static final String DEFAULT_API_VERSION = "1";
 
   // You could also inject the supported versions as a List<String>
@@ -28,16 +30,33 @@ public class AppConstants {
   // TODO: Check if this is needed for unit tests
 
   @Value("${app.default.username}")
-  public static String DEFAULT_USERNAME;
+  private static String DEFAULT_USERNAME;
 
   @Value("${app.default.password}")
-  public static String DEFAULT_PASSWORD;
+  private static String DEFAULT_PASSWORD;
 
   @Value("${app.admin.username}")
-  public static String ADMIN_USERNAME;
+  private static String ADMIN_USERNAME;
 
   @Value("${app.admin.password}")
-  public static String ADMIN_PASSWORD;
+  private static String ADMIN_PASSWORD;
+
+  // Getters for the properties
+  public static String getDefaultUsername() {
+    return DEFAULT_USERNAME;
+  }
+
+  public static String getDefaultPassword() {
+    return DEFAULT_PASSWORD;
+  }
+
+  public static String getAdminUsername() {
+    return ADMIN_USERNAME;
+  }
+
+  public static String getAdminPassword() {
+    return ADMIN_PASSWORD;
+  }
 
   // Private constructor to prevent instantiation
   private AppConstants() {

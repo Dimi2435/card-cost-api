@@ -31,12 +31,8 @@ public class SecurityConfig {
 
   private final JwtUtil jwtUtil;
 
-  // You also need AppConstants as a component if you're injecting its values
-  private final AppConstants appConstants;
-
-  public SecurityConfig(JwtUtil jwtUtil, AppConstants appConstants) {
+  public SecurityConfig(JwtUtil jwtUtil) {
     this.jwtUtil = jwtUtil;
-    this.appConstants = appConstants;
   }
 
   // --- Authentication Components (as provided in previous answer) ---
@@ -47,17 +43,30 @@ public class SecurityConfig {
 
   @Bean
   public UserDetailsService userDetailsService() {
+    System.out.println("user: USER USERNAME " + AppConstants.getDefaultUsername());
+    System.out.println("admin: ADMIN USERNAME " + AppConstants.getAdminUsername());
+
+    System.out.println("Raw password: USER PASSWORD " + AppConstants.getDefaultPassword());
+    System.out.println("Raw password: ADMIN PASSWORD " + AppConstants.getAdminPassword());
+
+    System.out.println(
+        "encoded password: USER PASSWORD "
+            + passwordEncoder().encode(AppConstants.getDefaultPassword()));
+    System.out.println(
+        "encoded password: ADMIN PASSWORD "
+            + passwordEncoder().encode(AppConstants.getAdminPassword()));
+
     UserDetails user =
         new AppUser.Builder()
-            .username(AppConstants.DEFAULT_USERNAME)
-            .password(passwordEncoder().encode(AppConstants.DEFAULT_PASSWORD))
+            .username(AppConstants.getDefaultUsername())
+            .password(passwordEncoder().encode(AppConstants.getDefaultPassword()))
             .roles(Set.of(Role.ROLE_USER)) // Assuming Role is an enum
             .build();
 
     UserDetails admin =
         new AppUser.Builder()
-            .username(AppConstants.ADMIN_USERNAME)
-            .password(passwordEncoder().encode(AppConstants.ADMIN_PASSWORD))
+            .username(AppConstants.getAdminUsername())
+            .password(passwordEncoder().encode(AppConstants.getAdminPassword()))
             .roles(Set.of(Role.ROLE_ADMIN)) // Assuming Role is an enum
             .build();
 
