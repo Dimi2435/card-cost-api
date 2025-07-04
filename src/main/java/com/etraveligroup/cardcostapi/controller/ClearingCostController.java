@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 // Author: Dimitrios Milios
@@ -52,6 +53,7 @@ public class ClearingCostController {
         @ApiResponse(responseCode = "400", description = "Invalid card number")
       })
   @PostMapping
+  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   public ResponseEntity<ClearingCostResponse> calculateCost(
       @RequestBody CalculateClearingCostRequest request,
       @RequestParam(value = "version", defaultValue = AppConstants.DEFAULT_API_VERSION)
@@ -71,6 +73,7 @@ public class ClearingCostController {
         @ApiResponse(responseCode = "404", description = "No clearing costs found")
       })
   @GetMapping("/all")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<ClearingCostResponse>> getAllClearingCosts() {
     List<ClearingCostResponse> costs = clearingCostService.getAllClearingCosts();
     return ResponseEntity.ok(costs);
@@ -83,6 +86,7 @@ public class ClearingCostController {
         @ApiResponse(responseCode = "404", description = "Clearing cost not found")
       })
   @GetMapping("/{id}")
+  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   public ResponseEntity<ClearingCostResponse> getClearingCostById(@PathVariable Long id) {
     ClearingCostResponse cost = clearingCostService.getClearingCostById(id);
     return ResponseEntity.ok(cost);
@@ -95,6 +99,7 @@ public class ClearingCostController {
         @ApiResponse(responseCode = "404", description = "Clearing cost not found")
       })
   @PutMapping("/{id}")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<ClearingCostResponse> updateClearingCost(
       @PathVariable Long id, @RequestBody UpdateClearingCostRequest request) {
     ClearingCostResponse updatedCost = clearingCostService.updateClearingCost(id, request);
@@ -108,6 +113,7 @@ public class ClearingCostController {
         @ApiResponse(responseCode = "404", description = "Clearing cost not found")
       })
   @DeleteMapping("/{id}")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Void> deleteClearingCost(@PathVariable Long id) {
     clearingCostService.deleteClearingCost(id);
     return ResponseEntity.noContent().build();

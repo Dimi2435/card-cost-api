@@ -1,5 +1,9 @@
 package com.etraveligroup.cardcostapi.util;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class AppConstants {
 
   public static final String API_BASE_PATH = "/api";
@@ -22,6 +26,18 @@ public class AppConstants {
   // // Default values
   // public static final String DEFAULT_COUNTRY_CODE = "US"; // Example if applicable
   // TODO: Check if this is needed for unit tests
+
+  @Value("${app.default.username}")
+  public static String DEFAULT_USERNAME;
+
+  @Value("${app.default.password}")
+  public static String DEFAULT_PASSWORD;
+
+  @Value("${app.admin.username}")
+  public static String ADMIN_USERNAME;
+
+  @Value("${app.admin.password}")
+  public static String ADMIN_PASSWORD;
 
   // Private constructor to prevent instantiation
   private AppConstants() {
