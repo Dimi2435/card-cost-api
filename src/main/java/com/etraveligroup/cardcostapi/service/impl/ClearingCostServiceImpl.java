@@ -1,9 +1,9 @@
 package com.etraveligroup.cardcostapi.service.impl;
 
-import com.etraveligroup.cardcostapi.model.entity.ClearingCostEntity;
-import com.etraveligroup.cardcostapi.model.response.CardCostResponse;
+import com.etraveligroup.cardcostapi.dto.ClearingCostResponse;
+import com.etraveligroup.cardcostapi.model.ClearingCost;
 import com.etraveligroup.cardcostapi.repository.ClearingCostRepository;
-import com.etraveligroup.cardcostapi.service.CardCostService;
+import com.etraveligroup.cardcostapi.service.ClearingCostService;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
@@ -18,19 +18,19 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 // Author: Dimitrios Milios
-// Implementation of CardCostService interface.
+// Implementation of ClearingCostService interface.
 // This class contains the logic for calculating card clearing costs.
 
 /**
- * Implementation of CardCostService interface. This class contains the logic for calculating card
- * clearing costs.
+ * Implementation of ClearingCostService interface. This class contains the logic for calculating
+ * card clearing costs.
  */
 @Service
-public class CardCostServiceImpl implements CardCostService {
+public class ClearingCostServiceImpl implements ClearingCostService {
 
   private final ClearingCostRepository clearingCostRepository;
   private final WebClient binlistWebClient;
-  private static final Logger logger = LoggerFactory.getLogger(CardCostServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(ClearingCostServiceImpl.class);
   private static final String BINLIST_BASE_URL = "https://lookup.binlist.net/";
 
   @Value("${app.clearing-cost.default-country}")
@@ -39,7 +39,7 @@ public class CardCostServiceImpl implements CardCostService {
   @Value("${app.clearing-cost.default-cost}")
   private BigDecimal defaultCost;
 
-  public CardCostServiceImpl(
+  public ClearingCostServiceImpl(
       ClearingCostRepository clearingCostRepository, WebClient.Builder webClientBuilder) {
     this.clearingCostRepository = clearingCostRepository;
     this.binlistWebClient = webClientBuilder.baseUrl(BINLIST_BASE_URL).build();
@@ -49,11 +49,11 @@ public class CardCostServiceImpl implements CardCostService {
    * Calculates the clearing cost for a given card number.
    *
    * @param cardNumber The full card number (PAN).
-   * @return CardCostResponse containing the country and calculated cost.
+   * @return ClearingCostResponse containing the country and calculated cost.
    * @throws IllegalArgumentException if the card number is invalid or BIN lookup fails.
    */
   @Override
-  public CardCostResponse calculateCardClearingCost(String cardNumber) {
+  public ClearingCostResponse calculateCardClearingCost(String cardNumber) {
     logger.info("Calculating clearing cost for card number: {}", cardNumber);
     if (cardNumber == null || cardNumber.length() < 6) {
       throw new IllegalArgumentException("Card number must have at least 6 digits to extract BIN.");
@@ -85,7 +85,7 @@ public class CardCostServiceImpl implements CardCostService {
       cost =
           clearingCostRepository
               .findByCountryCode(finalCountryCode) // This returns Optional<ClearingCostEntity>
-              .map(ClearingCostEntity::getCost) // Correct: maps Optional<ClearingCostEntity> to
+              .map(ClearingCost::getCost) // Correct: maps Optional<ClearingCostEntity> to
               // Optional<BigDecimal>
               .orElseGet(
                   () -> {
@@ -95,7 +95,7 @@ public class CardCostServiceImpl implements CardCostService {
                     return clearingCostRepository
                         .findByCountryCode(
                             defaultCountryCode) // Returns Optional<ClearingCostEntity>
-                        .map(ClearingCostEntity::getCost) // Correct
+                        .map(ClearingCost::getCost) // Correct
                         .orElse(
                             defaultCost); // Gets BigDecimal from Optional<BigDecimal> or default
                   });
@@ -104,18 +104,18 @@ public class CardCostServiceImpl implements CardCostService {
       cost =
           clearingCostRepository
               .findByCountryCode(defaultCountryCode) // Returns Optional<ClearingCostEntity>
-              .map(ClearingCostEntity::getCost) // Correct
+              .map(ClearingCost::getCost) // Correct
               .orElse(defaultCost); // Gets BigDecimal from Optional<BigDecimal> or default
     }
 
     logger.info("Calculated cost: {} for country: {}", cost, finalCountryCode);
-    return new CardCostResponse(finalCountryCode, cost);
+    return new ClearingCostResponse(finalCountryCode, cost);
   }
 
   @Override
-  public ClearingCostEntity updateClearingCost(String countryCode, BigDecimal newCost) {
+  public ClearingCost updateClearingCost(String countryCode, BigDecimal newCost) {
     // This line is correct if findByCountryCode returns Optional<ClearingCostEntity>
-    ClearingCostEntity costEntity =
+    ClearingCost costEntity =
         clearingCostRepository
             .findByCountryCode(countryCode)
             .orElseThrow(() -> new IllegalArgumentException("Country not found: " + countryCode));
@@ -126,7 +126,7 @@ public class CardCostServiceImpl implements CardCostService {
   @Override
   public void deleteClearingCost(String countryCode) {
     // This line is correct if findByCountryCode returns Optional<ClearingCostEntity>
-    ClearingCostEntity costEntity =
+    ClearingCost costEntity =
         clearingCostRepository
             .findByCountryCode(countryCode)
             .orElseThrow(() -> new IllegalArgumentException("Country not found: " + countryCode));
@@ -134,7 +134,7 @@ public class CardCostServiceImpl implements CardCostService {
   }
 
   @Override
-  public List<ClearingCostEntity> getAllClearingCosts() {
+  public List<ClearingCost> getAllClearingCosts() {
     return clearingCostRepository.findAll();
   }
 

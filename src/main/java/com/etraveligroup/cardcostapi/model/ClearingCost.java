@@ -1,4 +1,4 @@
-package com.etraveligroup.cardcostapi.model.entity;
+package com.etraveligroup.cardcostapi.model;
 
 import jakarta.persistence.*; // For JPA annotations like @Entity, @Table, etc.
 import java.math.BigDecimal; // For BigDecimal
@@ -10,8 +10,8 @@ import lombok.Data; // For Lombok's @Data annotation
 /** Entity representing the clearing cost data. */
 @Data
 @Entity
-@Table(name = "clearing_costs")
-public class ClearingCostEntity {
+@Table(name = "clearing_cost")
+public class ClearingCost {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

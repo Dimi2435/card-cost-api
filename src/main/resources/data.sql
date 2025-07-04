@@ -1,3 +1,0 @@
-[cite_start]INSERT INTO clearing_cost (country_code, cost) VALUES ('US', 5.00) ON DUPLICATE KEY UPDATE cost=VALUES(cost); [cite: 2, 19]
-[cite_start]INSERT INTO clearing_cost (country_code, cost) VALUES ('GR', 15.00) ON DUPLICATE KEY UPDATE cost=VALUES(cost); [cite: 2, 19]
-[cite_start]INSERT INTO clearing_cost (country_code, cost) VALUES ('OTHERS', 10.00) ON DUPLICATE KEY UPDATE cost=VALUES(cost); [cite: 2, 19]
