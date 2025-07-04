@@ -1,11 +1,9 @@
 package com.etraveligroup.cardcostapi.service;
 
 import com.etraveligroup.cardcostapi.dto.ClearingCostResponse;
+import com.etraveligroup.cardcostapi.dto.UpdateClearingCostRequest;
 import com.etraveligroup.cardcostapi.exception.InvalidCardNumberException;
-import com.etraveligroup.cardcostapi.model.ClearingCost;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import java.math.BigDecimal; // For BigDecimal
 import java.util.List;
 
 // Author: Dimitrios Milios
@@ -30,27 +28,33 @@ public interface ClearingCostService {
       throws InvalidCardNumberException;
 
   /**
-   * Updates the clearing cost for a given country code.
-   *
-   * @param countryCode The country code to update.
-   * @param newCost The new cost to set.
-   * @return Updated ClearingCost entity.
-   */
-  ClearingCost updateClearingCost(
-      @NotBlank(message = "Country code cannot be blank") String countryCode,
-      @NotNull(message = "New cost cannot be null") BigDecimal newCost);
-
-  /**
-   * Deletes the clearing cost for a given country code.
-   *
-   * @param countryCode The country code to delete.
-   */
-  void deleteClearingCost(@NotBlank(message = "Country code cannot be blank") String countryCode);
-
-  /**
    * Retrieves all clearing costs.
    *
-   * @return List of ClearingCost entities.
+   * @return List of ClearingCostResponse entities.
    */
-  List<ClearingCost> getAllClearingCosts();
+  List<ClearingCostResponse> getAllClearingCosts();
+
+  /**
+   * Retrieves a clearing cost by ID.
+   *
+   * @param id The ID of the clearing cost.
+   * @return ClearingCostResponse containing the clearing cost details.
+   */
+  ClearingCostResponse getClearingCostById(Long id);
+
+  /**
+   * Updates the clearing cost for a given ID.
+   *
+   * @param id The ID of the clearing cost to update.
+   * @param request The request containing the new clearing cost details.
+   * @return Updated ClearingCostResponse.
+   */
+  ClearingCostResponse updateClearingCost(Long id, UpdateClearingCostRequest request);
+
+  /**
+   * Deletes the clearing cost for a given ID.
+   *
+   * @param id The ID of the clearing cost to delete.
+   */
+  void deleteClearingCost(Long id);
 }

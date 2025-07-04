@@ -1,16 +1,17 @@
 package com.etraveligroup.cardcostapi.service.impl;
 
 import com.etraveligroup.cardcostapi.dto.ClearingCostResponse;
+import com.etraveligroup.cardcostapi.dto.UpdateClearingCostRequest;
 import com.etraveligroup.cardcostapi.exception.CostNotFoundException;
 import com.etraveligroup.cardcostapi.exception.InvalidCardNumberException;
 import com.etraveligroup.cardcostapi.model.ClearingCost;
 import com.etraveligroup.cardcostapi.repository.ClearingCostRepository;
 import com.etraveligroup.cardcostapi.service.ClearingCostService;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -123,31 +124,39 @@ public class ClearingCostServiceImpl implements ClearingCostService {
   }
 
   @Override
-  public ClearingCost updateClearingCost(
-      @NotBlank(message = "Country code cannot be blank") String countryCode,
-      @NotNull(message = "New cost cannot be null") BigDecimal newCost) {
-    ClearingCost costEntity =
-        clearingCostRepository
-            .findByCountryCode(countryCode)
-            .orElseThrow(() -> new CostNotFoundException("Country not found: " + countryCode));
-    costEntity.setCost(newCost);
-    return costEntity; // You might want to save it here: clearingCostRepository.save(costEntity);
+  public List<ClearingCostResponse> getAllClearingCosts() {
+    return clearingCostRepository.findAll().stream()
+        .map(cost -> new ClearingCostResponse(cost.getCountryCode(), cost.getCost()))
+        .collect(Collectors.toList());
   }
 
   @Override
-  public void deleteClearingCost(
-      @NotBlank(message = "Country code cannot be blank") String countryCode) {
-    // This line is correct if findByCountryCode returns Optional<ClearingCostEntity>
-    ClearingCost costEntity =
+  public ClearingCostResponse getClearingCostById(Long id) {
+    ClearingCost cost =
         clearingCostRepository
-            .findByCountryCode(countryCode)
-            .orElseThrow(() -> new IllegalArgumentException("Country not found: " + countryCode));
-    clearingCostRepository.delete(costEntity);
+            .findById(id)
+            .orElseThrow(() -> new CostNotFoundException("Clearing cost not found for ID: " + id));
+    return new ClearingCostResponse(cost.getCountryCode(), cost.getCost());
   }
 
   @Override
-  public List<ClearingCost> getAllClearingCosts() {
-    return clearingCostRepository.findAll();
+  public ClearingCostResponse updateClearingCost(Long id, UpdateClearingCostRequest request) {
+    ClearingCost cost =
+        clearingCostRepository
+            .findById(id)
+            .orElseThrow(() -> new CostNotFoundException("Clearing cost not found for ID: " + id));
+    cost.setCost(request.getCost());
+    clearingCostRepository.save(cost);
+    return new ClearingCostResponse(cost.getCountryCode(), cost.getCost());
+  }
+
+  @Override
+  public void deleteClearingCost(Long id) {
+    ClearingCost cost =
+        clearingCostRepository
+            .findById(id)
+            .orElseThrow(() -> new CostNotFoundException("Clearing cost not found for ID: " + id));
+    clearingCostRepository.delete(cost);
   }
 
   @Data

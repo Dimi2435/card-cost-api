@@ -16,13 +16,22 @@ import lombok.Data;
  * number is valid.
  */
 @Data
-public class ClearingCostRequest {
+public class CalculateClearingCostRequest {
 
   @NotBlank(message = "Card number cannot be empty")
   @Size(min = 8, max = 19, message = "Card number must be between 8 and 19 digits")
   @Pattern(regexp = "^[0-9]+$", message = "Card number must contain only digits")
   @Schema(description = "The card number (PAN) for which the cost is to be calculated.")
   private String cardNumber;
+
+  // Getter and Setter
+  public String getCardNumber() {
+    return cardNumber;
+  }
+
+  public void setCardNumber(String cardNumber) {
+    this.cardNumber = cardNumber;
+  }
 
   // You might add a custom validation here for Luhn algorithm if desired.
 }
