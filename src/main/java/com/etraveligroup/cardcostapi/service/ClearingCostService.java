@@ -1,6 +1,7 @@
 package com.etraveligroup.cardcostapi.service;
 
 import com.etraveligroup.cardcostapi.dto.ClearingCostResponse;
+import com.etraveligroup.cardcostapi.dto.CreateClearingCostRequest;
 import com.etraveligroup.cardcostapi.dto.UpdateClearingCostRequest;
 import com.etraveligroup.cardcostapi.exception.InvalidCardNumberException;
 import jakarta.validation.constraints.NotBlank;
@@ -26,6 +27,14 @@ public interface ClearingCostService {
   ClearingCostResponse calculateCardClearingCost(
       @NotBlank(message = "Card number cannot be blank") String cardNumber)
       throws InvalidCardNumberException;
+
+  /**
+   * Creates a new clearing cost entry.
+   *
+   * @param request The request containing the country code and cost.
+   * @return ClearingCostResponse containing the created clearing cost details.
+   */
+  ClearingCostResponse createClearingCost(CreateClearingCostRequest request);
 
   /**
    * Retrieves all clearing costs.

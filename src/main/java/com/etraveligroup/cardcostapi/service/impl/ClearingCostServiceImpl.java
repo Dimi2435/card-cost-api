@@ -1,6 +1,7 @@
 package com.etraveligroup.cardcostapi.service.impl;
 
 import com.etraveligroup.cardcostapi.dto.ClearingCostResponse;
+import com.etraveligroup.cardcostapi.dto.CreateClearingCostRequest;
 import com.etraveligroup.cardcostapi.dto.UpdateClearingCostRequest;
 import com.etraveligroup.cardcostapi.exception.CostNotFoundException;
 import com.etraveligroup.cardcostapi.exception.InvalidCardNumberException;
@@ -11,6 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -115,12 +117,30 @@ public class ClearingCostServiceImpl implements ClearingCostService {
               .orElse(defaultCost); // Gets BigDecimal from Optional<BigDecimal> or default
     }
 
-    if (countryCode == null || countryCode.isEmpty()) {
+    if (cost == null) {
       throw new CostNotFoundException("Cost not found for the specified country.");
     }
 
     logger.info("Calculated cost: {} for country: {}", cost, finalCountryCode);
     return new ClearingCostResponse(finalCountryCode, cost);
+  }
+
+  @Override
+  public ClearingCostResponse createClearingCost(CreateClearingCostRequest request) {
+    // Check if country code already exists
+    Optional<ClearingCost> existingCost =
+        clearingCostRepository.findByCountryCode(request.getCountryCode().toUpperCase());
+    if (existingCost.isPresent()) {
+      throw new IllegalArgumentException(
+          "Clearing cost already exists for country: " + request.getCountryCode());
+    }
+
+    ClearingCost newCost = new ClearingCost();
+    newCost.setCountryCode(request.getCountryCode().toUpperCase());
+    newCost.setCost(request.getCost());
+
+    ClearingCost savedCost = clearingCostRepository.save(newCost);
+    return new ClearingCostResponse(savedCost.getCountryCode(), savedCost.getCost());
   }
 
   @Override

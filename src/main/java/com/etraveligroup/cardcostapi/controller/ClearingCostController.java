@@ -2,6 +2,7 @@ package com.etraveligroup.cardcostapi.controller;
 
 import com.etraveligroup.cardcostapi.dto.CalculateClearingCostRequest;
 import com.etraveligroup.cardcostapi.dto.ClearingCostResponse;
+import com.etraveligroup.cardcostapi.dto.CreateClearingCostRequest;
 import com.etraveligroup.cardcostapi.dto.UpdateClearingCostRequest;
 import com.etraveligroup.cardcostapi.service.ClearingCostService;
 import com.etraveligroup.cardcostapi.util.AppConstants;
@@ -12,6 +13,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +66,23 @@ public class ClearingCostController {
     logger.info(
         "Calculated cost: {} for card number: {}", response.getCost(), request.getCardNumber());
     return ResponseEntity.ok(response);
+  }
+
+  @Operation(summary = "Create a new clearing cost")
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "201", description = "Clearing cost created successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid request data"),
+        @ApiResponse(
+            responseCode = "409",
+            description = "Clearing cost already exists for this country")
+      })
+  @PostMapping("/create")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<ClearingCostResponse> createClearingCost(
+      @RequestBody CreateClearingCostRequest request) {
+    ClearingCostResponse createdCost = clearingCostService.createClearingCost(request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdCost);
   }
 
   @Operation(summary = "Get all clearing costs")

@@ -3,14 +3,16 @@ package com.etraveligroup.cardcostapi.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.crypto.SecretKey;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtil {
-  private String secretKey = "your_secret_key"; // Use a strong secret key
+  private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
   public String generateToken(String username) {
     Map<String, Object> claims = new HashMap<>();
@@ -19,11 +21,11 @@ public class JwtUtil {
 
   private String createToken(Map<String, Object> claims, String subject) {
     return Jwts.builder()
-        .setClaims(claims)
-        .setSubject(subject)
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
-        .signWith(SignatureAlgorithm.HS256, secretKey)
+        .claims(claims)
+        .subject(subject)
+        .issuedAt(new Date(System.currentTimeMillis()))
+        .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
+        .signWith(secretKey)
         .compact();
   }
 
@@ -37,7 +39,7 @@ public class JwtUtil {
   }
 
   private Claims extractAllClaims(String token) {
-    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
   }
 
   private Boolean isTokenExpired(String token) {
