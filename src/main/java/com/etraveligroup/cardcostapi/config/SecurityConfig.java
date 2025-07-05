@@ -80,14 +80,14 @@ public class SecurityConfig {
                     // Allow actuator endpoints for monitoring
                     .requestMatchers("/actuator/**")
                     .permitAll()
-                    // Construct the path dynamically from AppConstants
+                    // Protect the payment cards cost endpoints
                     .requestMatchers(
                         AppConstants.API_BASE_PATH
                             + "/v"
                             + AppConstants.DEFAULT_API_VERSION
                             + AppConstants.PAYMENT_CARDS_COST_ENDPOINT
                             + "**")
-                    .authenticated() // Protect specific endpoints
+                    .hasAnyRole("ADMIN", "USER") // Allow both admin and user roles
                     .anyRequest()
                     .authenticated() // All other requests must be authenticated by default
             )
