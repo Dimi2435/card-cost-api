@@ -5,5 +5,5 @@ CREATE TABLE IF NOT EXISTS app_user (
     password VARCHAR(255) NOT NULL,
     roles VARCHAR(255), -- Store roles as a comma-separated string
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
