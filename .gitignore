@@ -20,3 +20,6 @@ bin/
 # Ignore log files
 *.log
 **/*.log
+
+# Ignore data directory
+/data/
