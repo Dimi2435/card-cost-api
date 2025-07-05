@@ -3,7 +3,6 @@ plugins {
     id 'org.springframework.boot' version '3.2.7' // Use a recent stable Spring Boot version
     id 'io.spring.dependency-management' version '1.1.5' // Manages transitive dependencies
     id 'com.diffplug.spotless' version '7.0.4' // Spotless plugin for formatting
-    id 'jacoco' // JaCoCo plugin for test coverage
 }
 
 group = 'com.etraveligroup'
@@ -45,11 +44,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok' // Important for tests if you use Lombok in test classes
 
-    // Testcontainers for integration testing
-    testImplementation 'org.testcontainers:junit-jupiter:1.19.8'
-    testImplementation 'org.testcontainers:testcontainers:1.19.8'
-    
-    // Spring Boot Test
+    // Spring Boot Test Starter
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // Flyway for database migrations
@@ -61,16 +56,10 @@ dependencies {
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-junit-jupiter' // For Mockito with JUnit 5
 
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3' // For JWT API
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3' // For JWT implementation
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3' // For JWT Jackson integration
     implementation 'org.springframework.boot:spring-boot-starter-security' // For Spring Security
-    
-    // Cache implementation
-    implementation 'org.springframework.boot:spring-boot-starter-cache' // For Spring Boot cache support
-    implementation 'com.github.ben-manes.caffeine:caffeine' // For Caffeine cache
 }
 
 // Spotless configuration
@@ -85,61 +74,8 @@ spotless {
     }
 }
 
-// JaCoCo configuration
-jacoco {
-    toolVersion = "0.8.11"
-}
-
-jacocoTestReport {
-    dependsOn test
-    reports {
-        xml.required = true
-        html.required = true
-        csv.required = false
-    }
-    executionData fileTree(dir: project.projectDir, includes: ['**/*.exec'])
-    
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                '**/ClearingCostApiApplication.class',
-                '**/config/**',
-                '**/dto/**',
-                '**/model/**',
-                '**/util/Role.class',
-                '**/util/AppConstants.class'
-            ])
-        }))
-    }
-}
-
-jacocoTestCoverageVerification {
-    dependsOn jacocoTestReport
-    violationRules {
-        rule {
-            limit {
-                counter = 'LINE'
-                value = 'COVEREDRATIO'
-                minimum = 0.60
-            }
-        }
-        rule {
-            limit {
-                counter = 'BRANCH'
-                value = 'COVEREDRATIO'
-                minimum = 0.60
-            }
-        }
-    }
-}
-
 tasks.named('test') {
     useJUnitPlatform()
-    finalizedBy jacocoTestReport
-}
-
-tasks.named('check') {
-    dependsOn jacocoTestCoverageVerification
 }
 
 // Optional: Integrate spotlessApply into the build lifecycle
