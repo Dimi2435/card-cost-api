@@ -47,6 +47,9 @@ dependencies {
     // Spring Boot Test Starter
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // Flyway for database migrations
+    implementation 'org.flywaydb:flyway-core'
+
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
     // Mockito for mocking in tests

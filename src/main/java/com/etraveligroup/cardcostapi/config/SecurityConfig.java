@@ -103,9 +103,19 @@ public class SecurityConfig {
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf.disable()) // Explicitly disable CSRF
+        .headers(
+            headers ->
+                headers.frameOptions(
+                    frameOptions -> frameOptions.disable())) // Allow H2 console to work in frames
         .authorizeHttpRequests(
             authorize ->
                 authorize
+                    // Allow H2 console access (development only)
+                    .requestMatchers("/h2-console/**")
+                    .permitAll()
+                    // Allow Swagger UI and API docs
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html")
+                    .permitAll()
                     // Allow login/auth endpoint if you have one
                     .requestMatchers("/authenticate")
                     .permitAll()
