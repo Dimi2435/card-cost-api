@@ -56,8 +56,6 @@ dependencies {
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-junit-jupiter' // For Mockito with JUnit 5
 
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3' // For JWT API
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3' // For JWT implementation
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3' // For JWT Jackson integration

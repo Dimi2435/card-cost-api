@@ -3,16 +3,21 @@ package com.etraveligroup.cardcostapi.controller;
 import com.etraveligroup.cardcostapi.dto.CalculateClearingCostRequest;
 import com.etraveligroup.cardcostapi.dto.ClearingCostResponse;
 import com.etraveligroup.cardcostapi.dto.CreateClearingCostRequest;
+import com.etraveligroup.cardcostapi.dto.PagedResponse;
 import com.etraveligroup.cardcostapi.dto.UpdateClearingCostRequest;
 import com.etraveligroup.cardcostapi.service.ClearingCostService;
 import com.etraveligroup.cardcostapi.util.AppConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,7 +62,7 @@ public class ClearingCostController {
   @PostMapping
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   public ResponseEntity<ClearingCostResponse> calculateCost(
-      @RequestBody CalculateClearingCostRequest request,
+      @Valid @RequestBody CalculateClearingCostRequest request,
       @RequestParam(value = "version", defaultValue = AppConstants.DEFAULT_API_VERSION)
           String version) {
     logger.info("API Version: {}", version);
@@ -80,7 +85,7 @@ public class ClearingCostController {
   @PostMapping("/create")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<ClearingCostResponse> createClearingCost(
-      @RequestBody CreateClearingCostRequest request) {
+      @Valid @RequestBody CreateClearingCostRequest request) {
     ClearingCostResponse createdCost = clearingCostService.createClearingCost(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdCost);
   }
@@ -95,6 +100,28 @@ public class ClearingCostController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<ClearingCostResponse>> getAllClearingCosts() {
     List<ClearingCostResponse> costs = clearingCostService.getAllClearingCosts();
+    return ResponseEntity.ok(costs);
+  }
+
+  @Operation(summary = "Get all clearing costs with pagination")
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved clearing costs"),
+        @ApiResponse(responseCode = "400", description = "Invalid pagination parameters")
+      })
+  @GetMapping("/all/paged")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<PagedResponse<ClearingCostResponse>> getAllClearingCostsPaged(
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size,
+      @RequestParam(defaultValue = "id") String sortBy,
+      @RequestParam(defaultValue = "ASC") String sortDirection) {
+
+    Sort.Direction direction =
+        sortDirection.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
+    Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+    PagedResponse<ClearingCostResponse> costs = clearingCostService.getAllClearingCosts(pageable);
     return ResponseEntity.ok(costs);
   }
 
@@ -120,7 +147,7 @@ public class ClearingCostController {
   @PutMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<ClearingCostResponse> updateClearingCost(
-      @PathVariable Long id, @RequestBody UpdateClearingCostRequest request) {
+      @PathVariable Long id, @Valid @RequestBody UpdateClearingCostRequest request) {
     ClearingCostResponse updatedCost = clearingCostService.updateClearingCost(id, request);
     return ResponseEntity.ok(updatedCost);
   }

@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  card-cost-api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:h2:file:/app/data/cardcostdb;DB_CLOSE_ON_EXIT=FALSE
+      - APP_EXTERNAL_BINLIST_URL=https://lookup.binlist.net/
+      - APP_RATE_LIMITING_ENABLED=true
+      - APP_RATE_LIMITING_MAX_REQUESTS=7000
+      - SERVER_TOMCAT_THREADS_MAX=200
+    volumes:
+      - card-cost-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      - card-cost-network
+
+  # Optional: Add Prometheus for monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    networks:
+      - card-cost-network
+
+  # Optional: Add Grafana for monitoring dashboards
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - card-cost-network
+
+volumes:
+  card-cost-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  card-cost-network:
+    driver: bridge

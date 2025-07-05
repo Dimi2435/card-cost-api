@@ -1,16 +1,14 @@
 package com.etraveligroup.cardcostapi.model;
 
-import com.etraveligroup.cardcostapi.util.*;
-import com.etraveligroup.cardcostapi.util.Role;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,8 +23,12 @@ public class AppUser implements UserDetails {
   private String username;
   private String password;
 
-  @ElementCollection(fetch = FetchType.EAGER)
-  private Set<Role> roles; // Assuming roles are stored as an enum or string
+  private String roles; // Store roles as a comma-separated string
+
+  // Default constructor for JPA
+  protected AppUser() {
+    // Default constructor for JPA
+  }
 
   // Private constructor for the builder
   private AppUser(Builder builder) {
@@ -38,9 +40,14 @@ public class AppUser implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return roles.stream()
-        .map(role -> new SimpleGrantedAuthority(role.name())) // Convert Role to GrantedAuthority
-        .toList();
+    // Parse roles from comma-separated string
+    if (roles == null || roles.trim().isEmpty()) {
+      return List.of();
+    }
+    return Arrays.stream(roles.split(","))
+        .map(String::trim)
+        .map(SimpleGrantedAuthority::new)
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -81,7 +88,7 @@ public class AppUser implements UserDetails {
     return password;
   }
 
-  public Set<Role> getRoles() {
+  public String getRoles() {
     return roles;
   }
 
@@ -90,7 +97,7 @@ public class AppUser implements UserDetails {
     private Long id;
     private String username;
     private String password;
-    private Set<Role> roles;
+    private String roles;
 
     public Builder id(Long id) {
       this.id = id;
@@ -107,7 +114,7 @@ public class AppUser implements UserDetails {
       return this;
     }
 
-    public Builder roles(Set<Role> roles) {
+    public Builder roles(String roles) {
       this.roles = roles;
       return this;
     }
