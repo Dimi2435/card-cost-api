@@ -19,7 +19,7 @@ public class JwtUtil {
     return createToken(claims, username);
   }
 
-  private String createToken(Map<String, Object> claims, String subject) {
+  public String createToken(Map<String, Object> claims, String subject) {
     return Jwts.builder()
         .claims(claims)
         .subject(subject)

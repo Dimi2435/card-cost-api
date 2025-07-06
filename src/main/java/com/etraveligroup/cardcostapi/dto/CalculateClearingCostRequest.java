@@ -1,4 +1,3 @@
-// This file has been renamed to ClearingCostRequest.java
 package com.etraveligroup.cardcostapi.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -6,10 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
-// Author: Dimitrios Milios
-// DTO for card cost request payload.
-// This class contains validation annotations to ensure the card number is valid.
 
 /**
  * DTO for card cost request payload. This class contains validation annotations to ensure the card
@@ -23,15 +18,6 @@ public class CalculateClearingCostRequest {
   @Pattern(regexp = "^[0-9]+$", message = "Card number must contain only digits")
   @Schema(description = "The card number (PAN) for which the cost is to be calculated.")
   private String cardNumber;
-
-  // Getter and Setter
-  public String getCardNumber() {
-    return cardNumber;
-  }
-
-  public void setCardNumber(String cardNumber) {
-    this.cardNumber = cardNumber;
-  }
 
   // You might add a custom validation here for Luhn algorithm if desired.
 }

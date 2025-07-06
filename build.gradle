@@ -63,6 +63,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security' // For Spring Security
 
     testImplementation 'org.springframework.security:spring-security-test:5.7.0' // Adjust version as needed
+
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.0' // Adjust version as necessary
+    implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final' // Adjust version as necessary
+    implementation 'org.glassfish:javax.el:3.0.0' // Required for Hibernate Validator
 }
 
 // Spotless configuration
@@ -112,14 +116,14 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.00
+                minimum = 0.02
             }
         }
         rule {
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
-                minimum = 0.00
+                minimum = 0.02
             }
         }
     }
