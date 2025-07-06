@@ -59,4 +59,12 @@ public class OpenApiConfig {
                             "JWT token for API authentication. "
                                 + "Use the /authenticate endpoint to obtain a token.")));
   }
+
+  public String getBaseUrl() {
+    return baseUrl;
+  }
+
+  public String getApplicationName() {
+    return applicationName;
+  }
 }

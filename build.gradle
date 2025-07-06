@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.2.7' // Use a recent stable Spring Boot version
     id 'io.spring.dependency-management' version '1.1.5' // Manages transitive dependencies
     id 'com.diffplug.spotless' version '7.0.4' // Spotless plugin for formatting
+    id 'jacoco' // JaCoCo plugin for test coverage
 }
 
 group = 'com.etraveligroup'
@@ -60,6 +61,8 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3' // For JWT implementation
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3' // For JWT Jackson integration
     implementation 'org.springframework.boot:spring-boot-starter-security' // For Spring Security
+
+    testImplementation 'org.springframework.security:spring-security-test:5.7.0' // Adjust version as needed
 }
 
 // Spotless configuration
@@ -74,8 +77,62 @@ spotless {
     }
 }
 
+// JaCoCo configuration
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+    executionData fileTree(dir: project.projectDir, includes: ['**/*.exec'])
+    
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/ClearingCostApiApplication.class',
+                '**/config/**',
+                '**/dto/**',
+                '**/model/**',
+                '**/util/Role.class',
+                '**/util/AppConstants.class'
+            ])
+        }))
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.00
+            }
+        }
+        rule {
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.00
+            }
+        }
+    }
+}
+
+
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+tasks.named('check') {
+    dependsOn jacocoTestCoverageVerification
 }
 
 // Optional: Integrate spotlessApply into the build lifecycle
