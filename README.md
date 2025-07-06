@@ -47,7 +47,8 @@ A high-performance Spring Boot REST API for calculating payment card clearing co
 
 2. **Build the application**
    ```bash
-   ./gradlew build
+   ./gradlew wrapper
+   ./gradlew clean build
    ```
 
 3. **Run the application**
