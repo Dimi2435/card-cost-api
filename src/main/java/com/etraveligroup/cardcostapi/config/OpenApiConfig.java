@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Configuration for OpenAPI/Swagger documentation. This class sets up the API documentation with
  * proper security schemes and server information.
+ *
+ * <p>Author: Dimitrios Milios
  */
 @Configuration
 public class OpenApiConfig {
@@ -25,6 +27,11 @@ public class OpenApiConfig {
   @Value("${spring.application.name:card-cost-api}")
   private String applicationName;
 
+  /**
+   * Customizes the OpenAPI configuration for the application.
+   *
+   * @return an OpenAPI instance with the configured information.
+   */
   @Bean
   public OpenAPI customOpenAPI() {
     return new OpenAPI()

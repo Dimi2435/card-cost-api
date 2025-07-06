@@ -5,6 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for ErrorResponse class. This class tests the behavior of the ErrorResponse.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 class ErrorResponseTest {
 
   @Test

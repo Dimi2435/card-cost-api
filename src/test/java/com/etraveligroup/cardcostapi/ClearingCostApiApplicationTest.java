@@ -1,14 +1,20 @@
 // package com.etraveligroup.cardcostapi;
 
-// import org.junit.jupiter.api.Test;
-// import org.springframework.boot.test.context.SpringBootTest;
-// import org.springframework.test.context.TestPropertySource;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.boot.test.context.SpringBootTest;
-// import org.springframework.context.ApplicationContext;
-// import static org.assertj.core.api.Assertions.assertThat;
+// // import org.junit.jupiter.api.Test;
+// // import org.springframework.boot.test.context.SpringBootTest;
+// // import org.springframework.test.context.TestPropertySource;
+// // import org.springframework.beans.factory.annotation.Autowired;
+// // import org.springframework.boot.test.context.SpringBootTest;
+// // import org.springframework.context.ApplicationContext;
+// // import static org.assertj.core.api.Assertions.assertThat;
 
-// /** Simple context load test to verify all beans are properly configured. */
+// /**
+//  * Simple context load test to verify all beans are properly configured.
+//  * This class ensures that the application context loads successfully and all dependencies are
+// satisfied.
+//  *
+//  * Author: Dimitrios Milios
+//  */
 // @SpringBootTest
 // @TestPropertySource(
 //     properties = {

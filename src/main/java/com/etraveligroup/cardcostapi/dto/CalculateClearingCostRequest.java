@@ -9,6 +9,8 @@ import lombok.Data;
 /**
  * DTO for card cost request payload. This class contains validation annotations to ensure the card
  * number is valid.
+ *
+ * <p>Author: Dimitrios Milios
  */
 @Data
 public class CalculateClearingCostRequest {

@@ -82,10 +82,7 @@ First, obtain a JWT token:
 ```bash
 curl -X POST http://localhost:8080/authenticate \
   -H "Content-Type: application/json" \
-  -d '{
-    "username": "user",
-    "password": "password"
-  }'
+  -d '{"username": "user", "password": "password"}'
 ```
 
 Save the returned token for subsequent API calls.
@@ -96,9 +93,7 @@ Save the returned token for subsequent API calls.
 curl -X POST http://localhost:8080/api/v1/payment-cards-cost \
   -H "Authorization: Bearer <your-jwt-token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "cardNumber": "4111111111111111"
-  }'
+  -d '{"cardNumber": "4111111111111111"}'
 ```
 
 ### 3. Admin Operations
@@ -109,10 +104,7 @@ For admin operations, use admin credentials:
 # Get admin token
 curl -X POST http://localhost:8080/authenticate \
   -H "Content-Type: application/json" \
-  -d '{
-    "username": "admin",
-    "password": "admin"
-  }'
+  -d '{"username": "admin", "password": "admin"}'
 
 # Get all clearing costs with pagination
 curl -X GET "http://localhost:8080/api/v1/payment-cards-cost/all/paged?page=0&size=10" \
@@ -122,10 +114,7 @@ curl -X GET "http://localhost:8080/api/v1/payment-cards-cost/all/paged?page=0&si
 curl -X POST http://localhost:8080/api/v1/payment-cards-cost/create \
   -H "Authorization: Bearer <admin-jwt-token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "countryCode": "DE",
-    "cost": 6.50
-  }'
+  -d '{"countryCode": "DE", "cost": 6.50}'
 ```
 
 ## Production Deployment
@@ -160,6 +149,10 @@ services:
 volumes:
   card_cost_data:
     driver: local
+
+networks:
+  card-cost-network:
+    driver: bridge
 ```
 
 ### 2. Run in Production
@@ -290,17 +283,6 @@ deploy:
 3. **Enable HTTPS** with reverse proxy (nginx/traefik)
 4. **Limit container privileges**
 5. **Regular security updates**
-
-```yaml
-# Security hardening example
-security_opt:
-  - no-new-privileges:true
-user: "1001:1001"
-read_only: true
-tmpfs:
-  - /tmp
-  - /app/logs
-```
 
 ## API Documentation
 

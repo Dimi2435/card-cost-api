@@ -8,6 +8,12 @@
 // import jakarta.validation.ConstraintViolation;
 // import java.util.Set;
 
+// /**
+//  * Unit tests for CalculateClearingCostRequest class.
+//  * This class tests the validation of the card clearing cost request.
+//  *
+//  * Author: Dimitrios Milios
+//  */
 // class CalculateClearingCostRequestTest {
 
 //     private final Validator validator;
@@ -23,7 +29,7 @@
 //         request.setCardNumber("45717360");
 
 //         Set<ConstraintViolation<CalculateClearingCostRequest>> violations =
-// validator.validate(request);
+//             validator.validate(request);
 //         assertTrue(violations.isEmpty(), "Should be valid with a proper card number");
 //     }
 
@@ -33,7 +39,7 @@
 //         request.setCardNumber("");
 
 //         Set<ConstraintViolation<CalculateClearingCostRequest>> violations =
-// validator.validate(request);
+//             validator.validate(request);
 //         assertEquals(1, violations.size(), "Should have one violation for empty card number");
 //         assertEquals("Card number cannot be empty", violations.iterator().next().getMessage());
 //     }
@@ -44,11 +50,11 @@
 //         request.setCardNumber("1234567");
 
 //         Set<ConstraintViolation<CalculateClearingCostRequest>> violations =
-// validator.validate(request);
+//             validator.validate(request);
 //         assertEquals(1, violations.size(), "Should have one violation for card number too
 // short");
 //         assertEquals("Card number must be between 8 and 19 digits",
-// violations.iterator().next().getMessage());
+//             violations.iterator().next().getMessage());
 //     }
 
 //     @Test
@@ -57,10 +63,10 @@
 //         request.setCardNumber("123456789012345678901");
 
 //         Set<ConstraintViolation<CalculateClearingCostRequest>> violations =
-// validator.validate(request);
+//             validator.validate(request);
 //         assertEquals(1, violations.size(), "Should have one violation for card number too long");
 //         assertEquals("Card number must be between 8 and 19 digits",
-// violations.iterator().next().getMessage());
+//             violations.iterator().next().getMessage());
 //     }
 
 //     @Test
@@ -69,10 +75,10 @@
 //         request.setCardNumber("4571A7360");
 
 //         Set<ConstraintViolation<CalculateClearingCostRequest>> violations =
-// validator.validate(request);
+//             validator.validate(request);
 //         assertEquals(1, violations.size(), "Should have one violation for invalid characters in
 // card number");
 //         assertEquals("Card number must contain only digits",
-// violations.iterator().next().getMessage());
+//             violations.iterator().next().getMessage());
 //     }
 // }

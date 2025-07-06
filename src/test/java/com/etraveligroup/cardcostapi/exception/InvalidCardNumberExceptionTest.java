@@ -4,6 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for InvalidCardNumberException class. This class tests the behavior of the
+ * InvalidCardNumberException.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 class InvalidCardNumberExceptionTest {
 
   @Test

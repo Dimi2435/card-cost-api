@@ -8,6 +8,12 @@
 // import org.springframework.boot.test.context.SpringBootTest;
 // import org.springframework.test.context.ActiveProfiles;
 
+// /**
+//  * Unit tests for OpenApiConfig class.
+//  * This class tests the configuration of OpenAPI documentation settings.
+//  *
+//  * Author: Dimitrios Milios
+//  */
 // @SpringBootTest
 // @ActiveProfiles("test") // Use the test profile to avoid issues with properties
 // public class OpenApiConfigTest {

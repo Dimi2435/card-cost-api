@@ -31,13 +31,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-// Author: Dimitrios Milios
-// Implementation of ClearingCostService interface.
-// This class contains the logic for calculating card clearing costs.
-
 /**
  * Implementation of ClearingCostService interface. This class contains the logic for calculating
  * card clearing costs.
+ *
+ * <p>Author: Dimitrios Milios
  */
 @Service
 public class ClearingCostServiceImpl implements ClearingCostService {
@@ -166,6 +164,12 @@ public class ClearingCostServiceImpl implements ClearingCostService {
     return new ClearingCostResponse(finalCountryCode, cost);
   }
 
+  /**
+   * Creates a new clearing cost entry.
+   *
+   * @param request The request containing the country code and cost.
+   * @return ClearingCostResponse containing the created clearing cost details.
+   */
   @Override
   @Transactional
   public ClearingCostResponse createClearingCost(CreateClearingCostRequest request) {
@@ -185,6 +189,11 @@ public class ClearingCostServiceImpl implements ClearingCostService {
     return new ClearingCostResponse(savedCost.getCountryCode(), savedCost.getCost());
   }
 
+  /**
+   * Retrieves all clearing costs.
+   *
+   * @return List of ClearingCostResponse entities.
+   */
   @Override
   // @Cacheable(value = "clearingCosts", key = "#countryCode")  // Temporarily disabled
   public List<ClearingCostResponse> getAllClearingCosts() {
@@ -193,6 +202,12 @@ public class ClearingCostServiceImpl implements ClearingCostService {
         .collect(Collectors.toList());
   }
 
+  /**
+   * Retrieves all clearing costs with pagination support.
+   *
+   * @param pageable Pagination parameters (page, size, sort)
+   * @return PagedResponse containing ClearingCostResponse entities
+   */
   @Override
   // @Cacheable(value = "clearingCostsPaged", key = "#pageable.pageNumber + '_' +
   // #pageable.pageSize")  // Temporarily disabled
@@ -216,6 +231,12 @@ public class ClearingCostServiceImpl implements ClearingCostService {
         page.isEmpty());
   }
 
+  /**
+   * Retrieves a clearing cost by ID.
+   *
+   * @param id The ID of the clearing cost.
+   * @return ClearingCostResponse containing the clearing cost details.
+   */
   @Override
   // @Cacheable(value = "clearingCosts", key = "#id")  // Temporarily disabled
   public ClearingCostResponse getClearingCostById(Long id) {
@@ -226,6 +247,13 @@ public class ClearingCostServiceImpl implements ClearingCostService {
     return new ClearingCostResponse(cost.getCountryCode(), cost.getCost());
   }
 
+  /**
+   * Updates the clearing cost for a given ID.
+   *
+   * @param id The ID of the clearing cost to update.
+   * @param request The request containing the new clearing cost details.
+   * @return Updated ClearingCostResponse.
+   */
   @Override
   // @CacheEvict(value = "clearingCosts", key = "#id")  // Temporarily disabled
   @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -239,6 +267,11 @@ public class ClearingCostServiceImpl implements ClearingCostService {
     return new ClearingCostResponse(cost.getCountryCode(), cost.getCost());
   }
 
+  /**
+   * Deletes the clearing cost for a given ID.
+   *
+   * @param id The ID of the clearing cost to delete.
+   */
   @Override
   // @CacheEvict(value = "clearingCosts", key = "#id")  // Temporarily disabled
   @Transactional

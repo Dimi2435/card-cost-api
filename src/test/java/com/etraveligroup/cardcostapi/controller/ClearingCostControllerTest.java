@@ -19,6 +19,12 @@
 // import java.math.BigDecimal;
 // import java.util.Collections;
 
+// /**
+//  * Unit tests for ClearingCostController class.
+//  * This class tests the clearing cost functionality of the controller.
+//  *
+//  * Author: Dimitrios Milios
+//  */
 // @WebMvcTest(ClearingCostController.class)
 // public class ClearingCostControllerTest {
 
@@ -40,6 +46,7 @@
 //     ClearingCostResponse response = new ClearingCostResponse();
 //     response.setCountry("US");
 //     response.setCost(BigDecimal.valueOf(5.00));
+
 //
 // when(clearingCostService.calculateCardClearingCost(request.getCardNumber())).thenReturn(response);
 
@@ -93,6 +100,7 @@
 //     ClearingCostResponse response = new ClearingCostResponse();
 //     response.setCountry("US");
 //     response.setCost(BigDecimal.valueOf(5.00));
+
 //
 // when(clearingCostService.getAllClearingCosts()).thenReturn(Collections.singletonList(response));
 

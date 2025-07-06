@@ -22,6 +22,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+/**
+ * Security configuration class for the application. Configures security settings, including
+ * authentication and authorization.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
@@ -33,12 +39,23 @@ public class SecurityConfig {
     this.jwtUtil = jwtUtil;
   }
 
-  // --- Authentication Components (as provided in previous answer) ---
+  /**
+   * Provides a PasswordEncoder bean for encoding passwords.
+   *
+   * @return a BCryptPasswordEncoder instance.
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * Configures the AuthenticationManager bean.
+   *
+   * @param userDetailsService the UserDetailsService for authentication.
+   * @param passwordEncoder the PasswordEncoder for encoding passwords.
+   * @return an AuthenticationManager instance.
+   */
   @Bean
   public AuthenticationManager authenticationManager(
       UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
@@ -48,13 +65,26 @@ public class SecurityConfig {
     return new ProviderManager(authenticationProvider);
   }
 
-  // --- Your JWT Authentication Filter as a Bean ---
+  /**
+   * Provides a JwtAuthenticationFilter bean for JWT authentication.
+   *
+   * @param userDetailsService the UserDetailsService for authentication.
+   * @return a JwtAuthenticationFilter instance.
+   */
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter(UserDetailsService userDetailsService) {
     return new JwtAuthenticationFilter(jwtUtil, userDetailsService);
   }
 
-  // --- Security Filter Chain (Replaces WebSecurityConfigurerAdapter) ---
+  /**
+   * Configures the security filter chain for the application.
+   *
+   * @param http the HttpSecurity object for configuring security.
+   * @param corsConfigurationSource the CORS configuration source.
+   * @param jwtAuthenticationFilter the JWT authentication filter.
+   * @return a SecurityFilterChain instance.
+   * @throws Exception if an error occurs during configuration.
+   */
   @Bean
   SecurityFilterChain securityFilterChain(
       HttpSecurity http,

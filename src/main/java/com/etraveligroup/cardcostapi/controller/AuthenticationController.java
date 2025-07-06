@@ -25,6 +25,8 @@ import org.springframework.web.server.ResponseStatusException;
 /**
  * Controller for handling authentication requests. Provides endpoints for user login and JWT token
  * generation.
+ *
+ * <p>Author: Dimitrios Milios
  */
 @RestController
 @RequestMapping("/authenticate")

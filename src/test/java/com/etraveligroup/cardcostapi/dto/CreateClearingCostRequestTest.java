@@ -11,6 +11,13 @@
 // import org.junit.jupiter.api.BeforeEach;
 // import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for CreateClearingCostRequest class. This class tests the validation of the clearing
+ * cost creation request.
+ *
+ * <p>Author: Dimitrios Milios
+ */
+
 // class CreateClearingCostRequestTest {
 
 //   private Validator validator;

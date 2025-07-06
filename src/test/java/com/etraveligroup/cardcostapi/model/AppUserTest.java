@@ -6,6 +6,12 @@ import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 
+/**
+ * Unit tests for AppUser class. This class tests the functionality of the AppUser model, including
+ * role management.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 class AppUserTest {
 
   @Test

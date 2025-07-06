@@ -12,6 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.context.request.WebRequest;
 
+/**
+ * Unit tests for GlobalExceptionHandler class. This class tests the behavior of the global
+ * exception handler for various exceptions.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 class GlobalExceptionHandlerTest {
 
   private GlobalExceptionHandler globalExceptionHandler;

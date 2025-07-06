@@ -19,6 +19,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.reactive.function.client.WebClientException;
 
+/**
+ * Global exception handler for the application. This class handles various exceptions and returns
+ * standardized error responses.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

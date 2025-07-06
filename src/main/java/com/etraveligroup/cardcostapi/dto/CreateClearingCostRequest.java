@@ -10,7 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/** DTO for creating a new clearing cost entry. Contains validation for country code and cost. */
+/**
+ * DTO for creating a new clearing cost entry. Contains validation for country code and cost.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

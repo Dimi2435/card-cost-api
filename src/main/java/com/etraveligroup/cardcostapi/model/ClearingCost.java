@@ -7,10 +7,12 @@ import jakarta.validation.constraints.Size; // For validating size constraints
 import java.math.BigDecimal; // For BigDecimal
 import lombok.Data; // For Lombok's @Data annotation
 
-// Author: Dimitrios Milios
-// Entity representing the clearing cost data.
-
-/** Entity representing the clearing cost data. */
+/**
+ * Entity representing the clearing cost data. This class contains the fields and validation for
+ * clearing costs associated with different countries.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @Data
 @Entity
 @Table(name = "clearing_cost")

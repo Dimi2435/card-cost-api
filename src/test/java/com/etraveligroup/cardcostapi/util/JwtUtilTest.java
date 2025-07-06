@@ -8,6 +8,12 @@
 // import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * Unit tests for JwtUtil class. This class tests the functionality of JWT token generation and
+ * validation.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 // @SpringBootTest
 // class JwtUtilTest {
 

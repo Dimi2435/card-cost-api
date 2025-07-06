@@ -9,13 +9,11 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 
-// Author: Dimitrios Milios
-// Service interface for calculating card clearing costs.
-// This interface defines the contract for card cost calculations.
-
 /**
  * Service interface for calculating card clearing costs. This interface defines the contract for
  * card cost calculations.
+ *
+ * <p>Author: Dimitrios Milios
  */
 public interface ClearingCostService {
 

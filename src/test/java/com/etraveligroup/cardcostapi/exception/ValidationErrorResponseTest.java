@@ -7,6 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for ValidationErrorResponse class. This class tests the behavior of the
+ * ValidationErrorResponse.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 class ValidationErrorResponseTest {
 
   @Test

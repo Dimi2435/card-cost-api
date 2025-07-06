@@ -17,6 +17,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * Configuration class for rate limiting. Provides basic rate limiting functionality for API
  * endpoints.
+ *
+ * <p>Author: Dimitrios Milios
  */
 @Configuration
 public class RateLimitingConfig implements WebMvcConfigurer {
@@ -30,6 +32,11 @@ public class RateLimitingConfig implements WebMvcConfigurer {
   @Value("${app.rate-limiting.window-duration:60000}")
   private long windowDurationMs;
 
+  /**
+   * Creates a RateLimitingInterceptor bean for rate limiting.
+   *
+   * @return a RateLimitingInterceptor instance.
+   */
   @Bean
   public RateLimitingInterceptor rateLimitingInterceptor() {
     return new RateLimitingInterceptor(maxRequests, windowDurationMs);

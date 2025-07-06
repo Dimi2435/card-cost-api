@@ -11,6 +11,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 /**
  * Configuration class for CORS (Cross-Origin Resource Sharing). Provides configurable CORS settings
  * for API access.
+ *
+ * <p>Author: Dimitrios Milios
  */
 @Configuration
 public class CorsConfig {
@@ -27,27 +29,28 @@ public class CorsConfig {
   @Value("${app.security.cors.allow-credentials}")
   private boolean allowCredentials;
 
+  /**
+   * Configures CORS settings for the application.
+   *
+   * @return a CorsConfigurationSource with the configured CORS settings.
+   */
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-
     // Configure allowed origins
     if ("*".equals(allowedOrigins)) {
       configuration.addAllowedOriginPattern("*");
     } else {
       configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
     }
-
     // Configure allowed methods
     configuration.setAllowedMethods(Arrays.asList(allowedMethods.split(",")));
-
     // Configure allowed headers
     if ("*".equals(allowedHeaders)) {
       configuration.addAllowedHeader("*");
     } else {
       configuration.setAllowedHeaders(Arrays.asList(allowedHeaders.split(",")));
     }
-
     configuration.setAllowCredentials(allowCredentials);
     configuration.setMaxAge(3600L); // 1 hour
 

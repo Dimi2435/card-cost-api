@@ -23,6 +23,11 @@ services:
     restart: unless-stopped
     networks:
       - card-cost-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
 
   # Optional: Add Prometheus for monitoring
   prometheus:

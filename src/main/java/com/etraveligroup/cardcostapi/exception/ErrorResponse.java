@@ -5,7 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/** ErrorResponse class to standardize error responses from the API. */
+/**
+ * ErrorResponse class to standardize error responses from the API. This class contains the error
+ * message, HTTP status code, and timestamp of the error occurrence.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

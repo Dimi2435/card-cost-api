@@ -26,7 +26,16 @@ try {
     Write-Host $errorResponse
 }
 
-# Test READ operations (we already tested GET all above)
+# Test invalid CREATE operation
+Write-Host "`nTesting CREATE operation with invalid data:"
+$invalidCreateBody = '{"countryCode":"INVALID","cost":-5}'
+try {
+    $invalidCreateResponse = Invoke-RestMethod -Uri "http://localhost:8080/api/v1/payment-cards-cost/create" -Method Post -Headers $adminAuthHeaders -Body $invalidCreateBody
+} catch {
+    Write-Host "Expected error for invalid data: $($_.Exception.Response.StatusCode)"
+}
+
+# Test READ operations
 Write-Host "`n2. Testing READ by ID operation:"
 try {
     $readResponse = Invoke-RestMethod -Uri "http://localhost:8080/api/v1/payment-cards-cost/1" -Method Get -Headers $adminAuthHeaders
@@ -37,6 +46,14 @@ try {
     $streamReader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
     $errorResponse = $streamReader.ReadToEnd()
     Write-Host $errorResponse
+}
+
+# Test invalid READ operation
+Write-Host "`nTesting READ operation for non-existent ID:"
+try {
+    $invalidReadResponse = Invoke-RestMethod -Uri "http://localhost:8080/api/v1/payment-cards-cost/9999" -Method Get -Headers $adminAuthHeaders
+} catch {
+    Write-Host "Expected error for non-existent ID: $($_.Exception.Response.StatusCode)"
 }
 
 # Test UPDATE operation

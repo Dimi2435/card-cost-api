@@ -12,6 +12,12 @@
 // import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 // import org.springframework.test.context.ActiveProfiles;
 
+/**
+ * Unit tests for ClearingCostRepository class. This class tests the repository methods for managing
+ * clearing cost entities.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 // @DataJpaTest
 // @ActiveProfiles("test")
 // class ClearingCostRepositoryTest {

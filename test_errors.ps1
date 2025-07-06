@@ -48,6 +48,18 @@ try {
         Write-Host $errorResponse
     }
     
+    # Additional tests for empty card number
+    Write-Host "`nTesting empty card number:" 
+    $emptyCardBody = '{"cardNumber":""}'
+    try {
+        $cardResponse = Invoke-RestMethod -Uri "http://localhost:8080/api/v1/payment-cards-cost" -Method Post -Headers $authHeaders -Body $emptyCardBody
+    } catch {
+        Write-Host "Expected error for empty card number: $($_.Exception.Response.StatusCode)"
+        $streamReader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
+        $errorResponse = $streamReader.ReadToEnd()
+        Write-Host $errorResponse
+    }
+    
 } catch {
     Write-Host "Error: $_"
     Write-Host $_.Exception.Message

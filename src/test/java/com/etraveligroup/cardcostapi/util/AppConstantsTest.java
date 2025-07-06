@@ -4,6 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for AppConstants class. This class tests the constant values defined in the
+ * AppConstants.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 class AppConstantsTest {
 
   @Test

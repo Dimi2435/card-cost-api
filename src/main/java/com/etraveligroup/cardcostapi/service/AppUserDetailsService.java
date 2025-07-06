@@ -8,6 +8,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for loading user-specific data. This class implements UserDetailsService to retrieve user
+ * information from the database.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @Service
 public class AppUserDetailsService implements UserDetailsService {
   @Autowired private AppUserRepository appUserRepository;

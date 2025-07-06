@@ -6,7 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/** DTO for authentication request containing username and password. */
+/**
+ * DTO for authentication request containing username and password.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

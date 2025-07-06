@@ -10,6 +10,13 @@
 // import java.math.BigDecimal;
 // import java.util.Set;
 
+/**
+ * Unit tests for UpdateClearingCostRequest class. This class tests the validation of the clearing
+ * cost update request.
+ *
+ * <p>Author: Dimitrios Milios
+ */
+
 // public class UpdateClearingCostRequestTest {
 
 //     private final Validator validator;

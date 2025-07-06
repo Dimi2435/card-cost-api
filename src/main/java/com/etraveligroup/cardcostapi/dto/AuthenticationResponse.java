@@ -5,7 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/** DTO for authentication response containing JWT token. */
+/**
+ * DTO for authentication response containing JWT token.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

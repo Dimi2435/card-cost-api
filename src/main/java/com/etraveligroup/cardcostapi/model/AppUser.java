@@ -13,6 +13,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * Represents a user in the application. This class implements UserDetails to provide user
+ * information for Spring Security.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @Entity
 @Table(name = "app_user")
 public class AppUser implements UserDetails {

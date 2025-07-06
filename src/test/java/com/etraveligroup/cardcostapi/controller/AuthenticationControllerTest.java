@@ -20,6 +20,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Unit tests for AuthenticationController class. This class tests the authentication functionality
+ * of the controller.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 class AuthenticationControllerTest {
 
   @Mock private AuthenticationManager authenticationManager;

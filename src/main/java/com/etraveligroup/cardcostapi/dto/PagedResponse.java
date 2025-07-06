@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 /**
  * Generic paged response wrapper for REST APIs. Provides pagination metadata and content for any
  * type of data.
+ *
+ * <p>Author: Dimitrios Milios
  */
 @Data
 @NoArgsConstructor

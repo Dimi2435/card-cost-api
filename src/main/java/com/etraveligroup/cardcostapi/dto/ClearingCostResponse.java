@@ -7,13 +7,11 @@ import lombok.AllArgsConstructor; // Requires Lombok
 import lombok.Data; // Requires Lombok
 import lombok.NoArgsConstructor; // Requires Lombok
 
-// Author: Dimitrios Milios
-// DTO for card cost response payload.
-// This class contains the response structure for card cost calculations.
-
 /**
  * DTO for card cost response payload. This class contains the response structure for card cost
  * calculations.
+ *
+ * <p>Author: Dimitrios Milios
  */
 @Data // Generates getters, setters, toString, equals, hashCode
 @NoArgsConstructor // Generates a no-argument constructor

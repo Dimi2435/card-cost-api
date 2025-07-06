@@ -17,6 +17,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+/**
+ * Unit tests for ClearingCostServiceImpl class. This class tests the service methods for managing
+ * clearing costs.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 class ClearingCostServiceImplTest {
 
   @InjectMocks private ClearingCostServiceImpl clearingCostService;
@@ -32,22 +38,6 @@ class ClearingCostServiceImplTest {
   void setUp() {
     MockitoAnnotations.openMocks(this);
   }
-
-  // @Test
-  // void testCalculateCardClearingCost_ValidCardNumber() {
-  //     // Arrange
-  //     ClearingCost clearingCost = createClearingCost(COUNTRY_CODE, COST);
-  //
-  // when(clearingCostRepository.findByCountryCode(COUNTRY_CODE)).thenReturn(Optional.of(clearingCost));
-
-  //     // Act
-  //     ClearingCostResponse response =
-  // clearingCostService.calculateCardClearingCost(VALID_CARD_NUMBER);
-
-  //     // Assert
-  //     assertEquals(COUNTRY_CODE, response.getCountry());
-  //     assertEquals(COST, response.getCost());
-  // }
 
   @Test
   void testCalculateCardClearingCost_InvalidCardNumber() {

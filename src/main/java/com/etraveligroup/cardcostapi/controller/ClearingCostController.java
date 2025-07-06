@@ -25,7 +25,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 // Author: Dimitrios Milios
-// REST controller for handling clearing cost requests.
 /**
  * REST controller for handling clearing cost requests. This class exposes endpoints for calculating
  * clearing costs.

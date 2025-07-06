@@ -7,6 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO for updating an existing clearing cost entry. Contains validation for the cost.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

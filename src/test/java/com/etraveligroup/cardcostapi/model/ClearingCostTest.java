@@ -6,6 +6,12 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for ClearingCost class. This class tests the functionality of the ClearingCost model,
+ * including field management and equality.
+ *
+ * <p>Author: Dimitrios Milios
+ */
 class ClearingCostTest {
 
   private ClearingCost clearingCost;
