@@ -10,6 +10,7 @@ import com.etraveligroup.cardcostapi.util.AppConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.slf4j.Logger;
@@ -54,6 +55,7 @@ public class ClearingCostController {
    * @return ResponseEntity containing the CardCostResponse.
    */
   @Operation(summary = "Calculate the clearing cost for a given card number")
+  @SecurityRequirement(name = "BearerAuth")
   @ApiResponses(
       value = {
         @ApiResponse(responseCode = "200", description = "Cost calculated successfully"),
@@ -74,6 +76,7 @@ public class ClearingCostController {
   }
 
   @Operation(summary = "Create a new clearing cost")
+  @SecurityRequirement(name = "BearerAuth")
   @ApiResponses(
       value = {
         @ApiResponse(responseCode = "201", description = "Clearing cost created successfully"),
@@ -91,6 +94,7 @@ public class ClearingCostController {
   }
 
   @Operation(summary = "Get all clearing costs")
+  @SecurityRequirement(name = "BearerAuth")
   @ApiResponses(
       value = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved clearing costs"),
@@ -104,6 +108,7 @@ public class ClearingCostController {
   }
 
   @Operation(summary = "Get all clearing costs with pagination")
+  @SecurityRequirement(name = "BearerAuth")
   @ApiResponses(
       value = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved clearing costs"),
@@ -126,6 +131,7 @@ public class ClearingCostController {
   }
 
   @Operation(summary = "Get a clearing cost by ID")
+  @SecurityRequirement(name = "BearerAuth")
   @ApiResponses(
       value = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved clearing cost"),
@@ -139,6 +145,7 @@ public class ClearingCostController {
   }
 
   @Operation(summary = "Update a clearing cost")
+  @SecurityRequirement(name = "BearerAuth")
   @ApiResponses(
       value = {
         @ApiResponse(responseCode = "200", description = "Clearing cost updated successfully"),
@@ -153,6 +160,7 @@ public class ClearingCostController {
   }
 
   @Operation(summary = "Delete a clearing cost")
+  @SecurityRequirement(name = "BearerAuth")
   @ApiResponses(
       value = {
         @ApiResponse(responseCode = "204", description = "Clearing cost deleted successfully"),

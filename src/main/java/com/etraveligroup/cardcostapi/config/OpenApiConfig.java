@@ -4,7 +4,6 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
@@ -35,17 +34,8 @@ public class OpenApiConfig {
                 .version("1.0.0")
                 .description(
                     "API for calculating clearing costs for payment cards based on BIN lookup")
-                .contact(
-                    new Contact()
-                        .name("Development Team")
-                        .email("dev@etraveligroup.com")
-                        .url("https://etraveligroup.com"))
-                .license(
-                    new License().name("MIT License").url("https://opensource.org/licenses/MIT")))
-        .servers(
-            List.of(
-                new Server().url(baseUrl).description("Local Development Server"),
-                new Server().url("https://api.etraveligroup.com").description("Production Server")))
+                .contact(new Contact().name("Dimitrios Milios")))
+        .servers(List.of(new Server().url(baseUrl).description("Local Development Server")))
         .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
         .components(
             new Components()
