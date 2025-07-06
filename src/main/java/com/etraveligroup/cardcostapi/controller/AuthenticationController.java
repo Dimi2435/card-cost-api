@@ -19,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Controller for handling authentication requests. Provides endpoints for user login and JWT token
@@ -86,13 +88,13 @@ public class AuthenticationController {
       logger.warn(
           "Authentication failed for user: {} - Invalid credentials",
           authenticationRequest.getUsername());
-      throw new BadCredentialsException("Invalid username or password");
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
     } catch (Exception e) {
       logger.error(
           "Authentication error for user: {} - {}",
           authenticationRequest.getUsername(),
           e.getMessage());
-      throw new RuntimeException("Authentication failed", e);
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Authentication failed", e);
     }
   }
 }

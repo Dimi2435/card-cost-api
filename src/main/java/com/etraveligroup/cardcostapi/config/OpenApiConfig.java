@@ -46,11 +46,11 @@ public class OpenApiConfig {
             List.of(
                 new Server().url(baseUrl).description("Local Development Server"),
                 new Server().url("https://api.etraveligroup.com").description("Production Server")))
-        .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
+        .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
         .components(
             new Components()
                 .addSecuritySchemes(
-                    "Bearer Authentication",
+                    "BearerAuth",
                     new SecurityScheme()
                         .type(SecurityScheme.Type.HTTP)
                         .scheme("bearer")
