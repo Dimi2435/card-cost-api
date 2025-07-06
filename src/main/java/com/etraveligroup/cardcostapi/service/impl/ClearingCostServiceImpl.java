@@ -114,9 +114,9 @@ public class ClearingCostServiceImpl implements ClearingCostService {
 
       if (binlistResponse != null
           && binlistResponse.country != null
-          && binlistResponse.country.iso2 != null
-          && !binlistResponse.country.iso2.trim().isEmpty()) {
-        countryCode = binlistResponse.country.iso2.toUpperCase();
+          && binlistResponse.country.alpha2 != null
+          && !binlistResponse.country.alpha2.trim().isEmpty()) {
+        countryCode = binlistResponse.country.alpha2.toUpperCase();
         logger.debug("Successfully retrieved country code: {} for BIN: {}", countryCode, bin);
       } else {
         logger.warn("No country information found for BIN: {}, using default", bin);
@@ -254,7 +254,21 @@ public class ClearingCostServiceImpl implements ClearingCostService {
   @NoArgsConstructor
   @AllArgsConstructor
   private static class BinlistResponse {
+    private Number number;
+    private String scheme;
+    private String type;
+    private String brand;
+    private boolean prepaid;
     private Country country;
+    private Bank bank;
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private static class Number {
+      private int length;
+      private boolean luhn;
+    }
 
     @Data
     @NoArgsConstructor
@@ -266,7 +280,17 @@ public class ClearingCostServiceImpl implements ClearingCostService {
       private String latitude;
       private String longitude;
       private String numeric;
-      private String iso2;
+      private String alpha2;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private static class Bank {
+      private String name;
+      private String url;
+      private String phone;
+      private String city;
     }
   }
 }
